@@ -1,6 +1,6 @@
 # Tasks
 
-**Last updated:** 2026-10-07
+**Last updated:** 2026-10-14
 
 Open work, ordered by priority. Done work is at the bottom for context — delete
 it once the list gets long.
@@ -11,24 +11,21 @@ it once the list gets long.
 
 ## Open
 
-### 🔴 T-0 — Commit and push
+### 🔴 T-0 — Two GitHub settings the pipeline needs
 
-`git log` shows **one commit: "Initial commit from Create Next App."** The
-entire portfolio — config, content, all 15 components, the design system, every
-asset, this documentation, and the update pipeline — is uncommitted working
-tree. A single bad command loses all of it.
+The repo is pushed to `kssharda0717-dev/portfolio`, so the forms and the
+workflow are live. Two things still have to be clicked, because neither can be
+committed:
 
-```
-?? portfolio.config.ts   ?? content/      ?? scripts/   ?? .github/
-?? src/components/       ?? public/avatar/  ?? docs/
- M src/app/layout.tsx     M src/app/page.tsx   M src/app/globals.css
-```
+1. **Issues → Labels** — create `content`, `content:certification`,
+   `content:project`, `content:skill`, `content:role`. An issue form that names
+   a label the repo does not have has it **silently dropped**: the issue opens
+   looking correct and the workflow never fires.
+2. **Settings → Actions → General → Workflow permissions → Read and write.**
+   The workflow commits to `main`; the default read-only token fails at the push.
 
-**Do first.** Also decide on a remote (private until deploy).
-
-The content pipeline ([CONTENT-PIPELINE](CONTENT-PIPELINE.md)) is written and
-dry-run but **cannot work until this is done** — it needs a remote, a `content`
-label, and Actions enabled with write permission to `main`.
+Until both are done every form submission is a no-op.
+See [CONTENT-PIPELINE](CONTENT-PIPELINE.md) §0.
 
 ---
 
@@ -111,15 +108,17 @@ Next.js major. See [DECISIONS](DECISIONS.md) D-016.
 
 ## Maintenance cadence
 
-Once the repo is pushed, the first four of these are **issue forms, not edits**
-— see [CONTENT-PIPELINE](CONTENT-PIPELINE.md).
+The first five of these are **issue forms, not edits** — see
+[CONTENT-PIPELINE](CONTENT-PIPELINE.md). The two *update* rows only need the id
+and the one field being changed; everything left blank is kept.
 
 | When | Do | Or by hand |
 |---|---|---|
 | New certification | *Add a certification* form | `content/certifications.json` |
 | Role change | *Change role or add a job* form | `content/role.json` + `content/experience.json` |
 | New project | *Add or update a project* form | `content/projects.json` |
-| New skill | *Add a skill* form | `content/techStack.json` + a free `row`/`col` (T-7) + maybe `MARKS` (T-8) |
+| Change one field on a project | Same form — id + that field only | `content/projects.json` |
+| New skill | *Add or update a skill* form | `content/techStack.json` + a free `row`/`col` (T-7) + maybe `MARKS` (T-8) |
 | New avatar / voiceover | Replace the files in `public/avatar/`, update `voiceTranscript`, commit | — |
 | Bio, quote, ID card, metrics | — | `portfolio.config.ts` |
 | Quarterly | `npm audit`, check dependency majors, re-read [TASKS](TASKS.md) | |

@@ -329,3 +329,66 @@ inside it behaves. The offset was simply wrong on mobile.
 
 **Note.** The override needs `!important` — it is competing with an inline
 declaration, which otherwise wins regardless of selector specificity.
+
+---
+
+## D-020 — The timeline reveal re-arms from a second, wider observer ✅
+
+**Context.** `TimelineRow` called `observer.disconnect()` on first sight. Coming
+back to Experience from any other section therefore found every row already
+open: the staggered unfold that gives the section its shape played once per page
+load and never again.
+
+**Decision.** Two IntersectionObservers. A narrow **reveal** band
+(`-10% 0px -42% 0px`) sets `shown`; a wide **re-arm** band (`25% 0px 25% 0px`)
+sets `hidden` when the row leaves it. Neither disconnects until unmount.
+
+**Why not the `else` of the first observer.** The reveal band is a thin strip
+across the middle of the viewport — a row stops intersecting it the moment you
+scroll past, so resetting there would snap each card shut directly under the
+reader. The re-arm band is strictly larger, with 203px of clearance at each edge
+at a 812px viewport, so a row can never be revealing and re-arming at once, and
+the collapse always happens off-screen.
+
+**Note.** The off-screen height change is absorbed by CSS scroll anchoring,
+which is on by default and is not overridden anywhere in `globals.css`.
+
+---
+
+## D-021 — Id-keyed content edits merge; they do not replace ✅
+
+**Context.** The first version of `apply-content-issue.mjs` rebuilt a project
+from the form alone, so the forms had to mark every field `required`. Adding a
+repo link to an existing project meant retyping the eyebrow, the description,
+every highlight and the whole tech stack — by hand, into a web form, with any
+omission silently deleting content. That is worse than editing the JSON, which
+the pipeline exists to avoid.
+
+**Decision.** Projects and skills are **upserts keyed by id**. An issue form
+renders an untouched field as the literal `_No response_`, which is the only
+signal that distinguishes "left blank" from "typed nothing"; the parser drops
+those, so an absent key means *inherit*. Only `id` stays `required` on the form.
+Completeness is enforced in the script and **only for a new entry**, since that
+is the one case where a blank cannot be inherited.
+
+**Consequences.**
+
+- Whole-list fields (highlights, tech stack, related project ids) still replace,
+  and say so on the form. Merging lists has no sane default — you cannot express
+  a deletion.
+- `githubUrl` / `liveDemoUrl` and `availabilityNote` **evict each other**.
+  `Work.tsx` renders the note only when there is no link, so merging would leave
+  a stale "source not public" line in the JSON beside the link that replaced it:
+  invisible on the page, and a lie to the next reader.
+- A skill keeps the grid cell it already holds. Re-placing on a category change
+  would punch a hole in one block of the periodic table and shunt the tile into
+  another; moving a tile is a deliberate edit, not a side effect of fixing a typo.
+- Entries are rebuilt in a fixed key order, so a one-field update diffs as one
+  line rather than a reordered object.
+
+**Also fixed here.** Filing through a form fires `opened` *and* `labeled`, so the
+workflow ran twice per submission; the second run's "nothing changed" branch
+overwrote the first run's verdict and reclosed the issue as *not planned*. The
+merge makes re-application a no-op, so the second run now produces no diff and
+reports nothing unless the issue is still open. Editing a **closed** issue no
+longer replays it at all.

@@ -26,12 +26,17 @@ npm run dev        # localhost:3000
 
 ### The short version: open an issue
 
-Once the repo is on GitHub, **certifications, projects, skills and your role
-are updated by filling in a form** — Issues → New issue → pick a form. An
-Action edits the JSON, type-checks and builds it, commits, and the site
-redeploys. Nothing to install, nothing to clone.
+**Certifications, projects, skills and your role are updated by filling in a
+form** — Issues → New issue → pick a form. An Action edits the JSON,
+type-checks and builds it, commits, and the site redeploys. Nothing to install,
+nothing to clone.
 
-See **[docs/CONTENT-PIPELINE.md](docs/CONTENT-PIPELINE.md)**.
+Changing one thing about something that already exists is a **two-box issue**:
+the id, and the field you are changing. The project and skill forms merge —
+anything left blank keeps what it had.
+
+See **[docs/CONTENT-PIPELINE.md](docs/CONTENT-PIPELINE.md)**, including the two
+repo settings the pipeline needs before any of it fires.
 
 ### By hand
 
@@ -101,7 +106,8 @@ scrolls — keep them to 3–5 so the card stays readable.
 
 In `content/techStack.json`. **This is the one entry with friction by hand** —
 you must pick a free `row` / `col` in the 10-column grid yourself (the gaps are
-deliberate). The issue form does this for you.
+deliberate). The *Add or update a skill* form does this for you, and leaves the
+cell alone on an update.
 
 ```json
 {

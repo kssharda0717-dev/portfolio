@@ -6,8 +6,17 @@ body:
   - type: markdown
     attributes:
       value: >-
-        If the **id** matches a project that already exists, that project is
-        replaced. Otherwise a new one is added to the top of the accordion.
+        **Updating a project that already exists?** Put its **id** in the first
+        box, fill in *only* the fields you want to change, and leave every other
+        box empty. Blank means "leave as it is" — nothing you skip is lost.
+
+
+        **Adding a new one?** Use an id nothing else uses and fill in everything
+        down to the tech stack. The check will tell you if you have missed
+        something, and nothing is committed until it passes.
+
+
+        Only the id is marked required, because an update needs nothing else.
 
   - type: input
     id: id
@@ -24,48 +33,46 @@ body:
     id: title
     attributes:
       label: Title
-      description: Shown on the accordion spine.
+      description: Shown on the accordion spine. Required for a new project.
       placeholder: New Thing — What It Does
-    validations:
-      required: true
 
   - type: input
     id: eyebrow
     attributes:
       label: Eyebrow
-      description: The small line above the title. Two or three words, separated by a middle dot.
+      description: >-
+        The small line above the title. Two or three words, separated by a
+        middle dot. Required for a new project.
       placeholder: Agentic AI · RAG
-    validations:
-      required: true
 
   - type: textarea
     id: shortDescription
     attributes:
       label: Description
-      description: Two or three sentences on the problem it solves. Prose, not bullets.
-    validations:
-      required: true
+      description: >-
+        Two or three sentences on the problem it solves. Prose, not bullets.
+        Required for a new project.
 
   - type: textarea
     id: featureHighlights
     attributes:
       label: Highlights
-      description: One per line, four to six of them. Concrete beats adjectival.
+      description: >-
+        One per line, four to six of them. Concrete beats adjectival. Required
+        for a new project. Filling this in replaces the whole list, so repeat
+        the lines you want to keep.
       placeholder: |
         Orchestrator routing to four sub-agents
         Circuit breaker trips instead of burning quota
         Guardrail validator on every tool call
-    validations:
-      required: true
 
   - type: input
     id: techStackTags
     attributes:
       label: Tech stack
-      description: Comma-separated.
+      description: >-
+        Comma-separated. Required for a new project. Replaces the whole list.
       placeholder: Python, FastAPI, Postgres
-    validations:
-      required: true
 
   - type: input
     id: statValue

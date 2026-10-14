@@ -11,6 +11,13 @@
  * It deliberately does no type checking of its own beyond what it can say
  * clearly: `tsc --noEmit` runs afterwards and is the real gate.
  *
+ * Entries keyed by an id — projects and skills — are *merged*, not replaced. A
+ * field left blank keeps whatever it already had, so correcting one link is a
+ * one-field issue instead of a retype of the whole entry. The forms therefore
+ * mark almost nothing `required`; completeness is demanded here, and only of a
+ * genuinely new entry, because that is the only case where a blank cannot be
+ * inherited from somewhere.
+ *
  * Local dry run:
  *   ISSUE_LABELS='content:certification' ISSUE_BODY="$(cat sample.md)" \
  *     node scripts/apply-content-issue.mjs
@@ -84,6 +91,44 @@ function addCertification(f) {
   return `Added certification **${title}** (${issuer}, ${issueYear}).`;
 }
 
+/*
+  Collects only the fields the author actually filled in. `parseIssueForm` has
+  already dropped `_No response_`, so a key being absent here means "left
+  blank", which on an update means "leave this as it is". That distinction is
+  the whole reason adding one link is a one-field issue rather than a retype of
+  the entry.
+*/
+function provided(f, spec) {
+  const out = {};
+  for (const [key, label, transform] of spec) {
+    const raw = f.get(label);
+    if (raw === undefined) continue;
+    out[key] = transform ? transform(raw) : raw;
+  }
+  return out;
+}
+
+/* Rebuild in a fixed key order so an update diffs as the changed line alone. */
+const ordered = (object, keys) => {
+  const out = {};
+  for (const key of keys) if (object[key] !== undefined) out[key] = object[key];
+  return out;
+};
+
+const PROJECT_KEYS = [
+  'id',
+  'eyebrow',
+  'title',
+  'shortDescription',
+  'featureHighlights',
+  'techStackTags',
+  'statValue',
+  'statLabel',
+  'githubUrl',
+  'liveDemoUrl',
+  'availabilityNote',
+];
+
 function upsertProject(f) {
   const id = f.get('Short id');
   if (!id) fail('Short id is required.');
@@ -91,48 +136,71 @@ function upsertProject(f) {
     fail(`Short id must be lowercase and hyphenated, got "${id}".`);
   }
 
-  const githubUrl = f.get('GitHub URL');
-  const availabilityNote = f.get('Availability note');
-  if (!githubUrl && !availabilityNote) {
-    fail('Give the project either a GitHub URL or an availability note — otherwise the panel has nothing to close on.');
-  }
+  const projects = read('projects.json');
+  const index = projects.findIndex((p) => p.id === id);
+  const current = index === -1 ? null : projects[index];
 
-  const entry = {
-    id,
-    eyebrow: f.get('Eyebrow'),
-    title: f.get('Title'),
-    shortDescription: f.get('Description'),
-    featureHighlights: lines(f.get('Highlights') ?? ''),
-    techStackTags: commas(f.get('Tech stack') ?? ''),
-  };
-  for (const [key, label] of [
+  const fields = provided(f, [
     ['eyebrow', 'Eyebrow'],
     ['title', 'Title'],
     ['shortDescription', 'Description'],
-  ]) {
-    if (!entry[key]) fail(`${label} is required.`);
-  }
-  if (entry.featureHighlights.length === 0) fail('Give the project at least one highlight.');
-  if (entry.techStackTags.length === 0) fail('Give the project at least one tech-stack tag.');
+    ['featureHighlights', 'Highlights', lines],
+    ['techStackTags', 'Tech stack', commas],
+    ['statValue', 'Pull-stat figure'],
+    ['statLabel', 'Pull-stat label'],
+    ['githubUrl', 'GitHub URL'],
+    ['liveDemoUrl', 'Live demo URL'],
+    ['availabilityNote', 'Availability note'],
+  ]);
 
-  const statValue = f.get('Pull-stat figure');
-  const statLabel = f.get('Pull-stat label');
-  if (statValue) entry.statValue = statValue;
-  if (statLabel) entry.statLabel = statLabel;
-  const liveDemoUrl = f.get('Live demo URL');
-  if (liveDemoUrl) entry.liveDemoUrl = liveDemoUrl;
-  if (githubUrl) entry.githubUrl = githubUrl;
-  if (availabilityNote) entry.availabilityNote = availabilityNote;
-
-  const projects = read('projects.json');
-  const existing = projects.findIndex((p) => p.id === id);
-  if (existing === -1) {
-    projects.unshift(entry);
-  } else {
-    projects[existing] = entry;
+  if (current && Object.keys(fields).length === 0) {
+    fail(`Nothing to change — "${id}" already exists and every other field was left blank.`);
   }
+
+  const entry = ordered({ ...current, ...fields, id }, PROJECT_KEYS);
+
+  /*
+    Work.tsx renders the links when there are any and the availability note
+    only when there are none, so the two are mutually exclusive by design.
+    Merging would otherwise leave a "no public repo" line sitting in the file
+    beside the repo link that replaced it — invisible on the page, and a lie to
+    the next person who reads the JSON. Whichever the author supplied this time
+    is the one they meant, so it evicts the other.
+  */
+  if (fields.githubUrl || fields.liveDemoUrl) delete entry.availabilityNote;
+  else if (fields.availabilityNote) {
+    delete entry.githubUrl;
+    delete entry.liveDemoUrl;
+  }
+
+  // Completeness is only demanded of a *new* entry. An update inherits whatever
+  // it does not mention, so these are already satisfied.
+  if (!current) {
+    for (const [key, label] of [
+      ['eyebrow', 'Eyebrow'],
+      ['title', 'Title'],
+      ['shortDescription', 'Description'],
+    ]) {
+      if (!entry[key]) fail(`${label} is required when adding a new project.`);
+    }
+    if (!entry.featureHighlights?.length) fail('Give the new project at least one highlight.');
+    if (!entry.techStackTags?.length) fail('Give the new project at least one tech-stack tag.');
+  }
+
+  if (!entry.githubUrl && !entry.liveDemoUrl && !entry.availabilityNote) {
+    fail(
+      'Give the project a GitHub URL, a live demo URL, or an availability note — otherwise the panel has nothing to close on.'
+    );
+  }
+
+  if (current) projects[index] = entry;
+  else projects.unshift(entry);
+
   write('projects.json', projects);
-  return `${existing === -1 ? 'Added' : 'Updated'} project **${entry.title}** (\`${id}\`).`;
+  const changed = Object.keys(fields).join(', ');
+  return current
+    ? `Updated project **${entry.title}** (\`${id}\`) — changed: ${changed}.`
+    : `Added project **${entry.title}** (\`${id}\`).`;
 }
 
 /*
@@ -158,47 +226,92 @@ function placeElement(techStack, category) {
   return fail('The periodic grid is full — add a row by hand.');
 }
 
-function addSkill(f) {
-  const id = f.get('Short id');
-  const name = f.get('Name');
-  const symbol = f.get('Symbol');
-  const category = f.get('Category');
-  const proficiency = f.get('Proficiency');
-  const years = f.get('Years of experience');
-  const description = f.get('Description');
+const SKILL_KEYS = [
+  'id',
+  'symbol',
+  'name',
+  'category',
+  'proficiency',
+  'yearsExperience',
+  'description',
+  'relatedProjectIds',
+  'row',
+  'col',
+];
 
-  if (!id || !name || !symbol || !category || !proficiency || !years || !description) {
-    fail('Every field except "Related project ids" is required.');
-  }
+function upsertSkill(f) {
+  const id = f.get('Short id');
+  if (!id) fail('Short id is required.');
   if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(id)) fail(`Short id must be lowercase and hyphenated, got "${id}".`);
-  if (!/^[A-Za-z0-9]{1,2}$/.test(symbol)) fail(`Symbol must be one or two letters, got "${symbol}".`);
-  if (!/^\d+$/.test(years)) fail(`Years of experience must be a whole number, got "${years}".`);
 
   const techStack = read('techStack.json');
-  if (techStack.some((e) => e.id === id)) fail(`A skill with id "${id}" already exists.`);
+  const index = techStack.findIndex((e) => e.id === id);
+  const current = index === -1 ? null : techStack[index];
 
-  const relatedProjectIds = commas(f.get('Related project ids') ?? '');
-  const known = new Set(read('projects.json').map((p) => p.id));
-  const unknown = relatedProjectIds.filter((pid) => !known.has(pid));
-  if (unknown.length) {
-    fail(`Unknown project id(s): ${unknown.join(', ')}. Known ids: ${[...known].join(', ')}.`);
+  const fields = provided(f, [
+    ['name', 'Name'],
+    ['symbol', 'Symbol'],
+    ['category', 'Category'],
+    ['proficiency', 'Proficiency'],
+    ['yearsExperience', 'Years of experience'],
+    ['description', 'Description'],
+    ['relatedProjectIds', 'Related project ids', commas],
+  ]);
+
+  if (current && Object.keys(fields).length === 0) {
+    fail(`Nothing to change — "${id}" already exists and every other field was left blank.`);
   }
 
-  const { row, col } = placeElement(techStack, category);
-  techStack.push({
-    id,
-    symbol,
-    name,
-    category,
-    proficiency,
-    yearsExperience: Number(years),
-    description,
-    relatedProjectIds,
-    row,
-    col,
-  });
+  if (fields.symbol !== undefined && !/^[A-Za-z0-9]{1,2}$/.test(fields.symbol)) {
+    fail(`Symbol must be one or two letters, got "${fields.symbol}".`);
+  }
+  if (fields.yearsExperience !== undefined) {
+    if (!/^\d+$/.test(fields.yearsExperience)) {
+      fail(`Years of experience must be a whole number, got "${fields.yearsExperience}".`);
+    }
+    fields.yearsExperience = Number(fields.yearsExperience);
+  }
+
+  if (fields.relatedProjectIds) {
+    const known = new Set(read('projects.json').map((p) => p.id));
+    const unknown = fields.relatedProjectIds.filter((pid) => !known.has(pid));
+    if (unknown.length) {
+      fail(`Unknown project id(s): ${unknown.join(', ')}. Known ids: ${[...known].join(', ')}.`);
+    }
+  }
+
+  const merged = { ...current, ...fields, id };
+
+  if (!current) {
+    for (const [key, label] of [
+      ['name', 'Name'],
+      ['symbol', 'Symbol'],
+      ['category', 'Category'],
+      ['proficiency', 'Proficiency'],
+      ['description', 'Description'],
+    ]) {
+      if (!merged[key]) fail(`${label} is required when adding a new skill.`);
+    }
+    if (merged.yearsExperience === undefined) fail('Years of experience is required when adding a new skill.');
+    merged.relatedProjectIds ??= [];
+    /*
+      Only a new element is placed. An update keeps the cell it already holds,
+      because the grid is a hand-tuned silhouette — re-placing on, say, a
+      category change would punch a hole in one block and shunt a tile into
+      another. A moved tile is a deliberate edit of techStack.json, not a
+      side effect of correcting a typo.
+    */
+    Object.assign(merged, placeElement(techStack, merged.category));
+  }
+
+  const entry = ordered(merged, SKILL_KEYS);
+  if (current) techStack[index] = entry;
+  else techStack.push(entry);
+
   write('techStack.json', techStack);
-  return `Added skill **${name}** (${symbol}) to *${category}* at row ${row}, column ${col}.`;
+  return current
+    ? `Updated skill **${entry.name}** (\`${id}\`) — changed: ${Object.keys(fields).join(', ')}.`
+    : `Added skill **${entry.name}** (${entry.symbol}) to *${entry.category}* at row ${entry.row}, column ${entry.col}.`;
 }
 
 function updateRole(f) {
@@ -244,7 +357,7 @@ function updateRole(f) {
 const HANDLERS = {
   'content:certification': addCertification,
   'content:project': upsertProject,
-  'content:skill': addSkill,
+  'content:skill': upsertSkill,
   'content:role': updateRole,
 };
 

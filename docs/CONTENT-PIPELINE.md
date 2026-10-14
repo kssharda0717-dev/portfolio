@@ -1,14 +1,23 @@
 # Updating the site without opening an editor
 
-**Last updated:** 2026-10-07
+**Last updated:** 2026-10-14
 
 You fill in a form on GitHub. A workflow edits the content files, type-checks
 and builds the result, commits it, and the host redeploys. Nothing to install,
 no branch to pull, no code to read.
 
-> Not wired up until the repo has a remote and a deploy target
-> ([TASKS](TASKS.md) T-0, T-4). The forms, the script and the workflow are
-> written and tested; they start working the moment the repo is pushed.
+## 0. One-time setup on GitHub
+
+Two things have to exist before a form does anything. Both are dashboard
+settings, not code, so they cannot be committed:
+
+1. **The labels.** Create `content`, `content:certification`, `content:project`,
+   `content:skill` and `content:role` under **Issues → Labels**. A form that
+   names a label the repo does not have has it **silently dropped** — the issue
+   opens looking fine and nothing runs.
+2. **Write permission for Actions.** **Settings → Actions → General → Workflow
+   permissions → Read and write**. The workflow commits to `main`; without this
+   it reaches the push and fails.
 
 ---
 
@@ -21,12 +30,35 @@ no branch to pull, no code to read.
    |---|---|
    | **Add a certification** | A new entry at the top of the certifications list |
    | **Add or update a project** | A panel in the Work accordion |
-   | **Add a skill** | An element in the periodic table |
+   | **Add or update a skill** | An element in the periodic table |
    | **Change role or add a job** | The hero title, the share preview, and/or a new row on the timeline |
 
-3. Fill it in in plain language. Required fields are marked; optional ones can
-   be left alone.
+3. Fill it in in plain language.
 4. Submit.
+
+### Changing one thing about something that already exists
+
+The project and skill forms are **merge, not replace**. Put the existing **id**
+in the first box, fill in only the boxes you want to change, leave the rest
+empty, and submit. Blank means *leave as it is* — adding a repo link to a
+project is a two-box issue, not a retype of the whole panel.
+
+That is why only the id is marked required on those two forms: an update needs
+nothing else. Completeness is still demanded of a genuinely **new** entry, but
+by the check rather than by the form, because that is the only case where a
+blank cannot be inherited from the existing entry.
+
+Two things do not merge, and say so on the form:
+
+- **Highlights** and **Tech stack** (and **Related project ids**) are whole
+  lists. Filling one in replaces it — repeat the lines you want to keep.
+- **GitHub / live demo URL** and **Availability note** are mutually exclusive,
+  because the panel shows the note only when there is no link. Supplying either
+  side evicts the other.
+
+An update also keeps the grid cell a skill already holds. Re-placing on, say, a
+category change would punch a hole in one block of the periodic table and shunt
+the tile into another; moving a tile is a deliberate edit of `techStack.json`.
 
 Within a couple of minutes the issue gets a comment. Either:
 
@@ -76,8 +108,8 @@ site that changes a few times a year.
 
 ## 4. What it can and cannot do
 
-**Can.** Certifications, projects (add and update), skills, the role strings,
-the share preview, and a new job on the timeline.
+**Can.** Certifications, projects and skills (add *and* update, one field at a
+time), the role strings, the share preview, and a new job on the timeline.
 
 It also closes the periodic-table gap: the Action picks the first free cell in
 the rows that category already occupies, so you never choose `row` / `col`

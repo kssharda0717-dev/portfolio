@@ -1,21 +1,33 @@
-name: Add a skill
-description: A new element in the periodic table of the stack.
-title: 'content: add skill'
+name: Add or update a skill
+description: A new element in the periodic table of the stack, or a change to one already there.
+title: 'content: skill'
 labels: ['content', 'content:skill']
 body:
   - type: markdown
     attributes:
       value: >-
-        You do not pick a grid position — the Action finds the first free cell in
-        the right category block for you. If the tool has a logo in Simple Icons
-        it appears automatically; if not it falls back to the monogram, which is
-        the periodic-table conceit anyway.
+        **Updating a skill that already exists?** Put its **id** in the first box,
+        fill in *only* the fields you want to change, and leave every other box
+        empty. Blank means "leave as it is" — nothing you skip is lost, and the
+        element keeps the grid cell it already has.
+
+
+        **Adding a new one?** Use an id nothing else uses and fill in everything
+        except the related projects. You do not pick a grid position — the check
+        finds the first free cell in the right category block for you. If the tool
+        has a logo in Simple Icons it appears automatically; if not it falls back
+        to the monogram, which is the periodic-table conceit anyway.
+
+
+        Only the id is marked required, because an update needs nothing else.
 
   - type: input
     id: id
     attributes:
       label: Short id
-      description: Lowercase, hyphenated.
+      description: >-
+        Lowercase, hyphenated. This is the permanent handle — changing it on an
+        existing skill creates a second element rather than renaming the first.
       placeholder: langgraph
     validations:
       required: true
@@ -24,23 +36,23 @@ body:
     id: name
     attributes:
       label: Name
+      description: Required for a new skill.
       placeholder: LangGraph
-    validations:
-      required: true
 
   - type: input
     id: symbol
     attributes:
       label: Symbol
-      description: One or two characters, like a chemical symbol. Capital then lowercase.
+      description: >-
+        One or two characters, like a chemical symbol. Capital then lowercase.
+        Required for a new skill.
       placeholder: Lg
-    validations:
-      required: true
 
   - type: dropdown
     id: category
     attributes:
       label: Category
+      description: Required for a new skill. Leave unselected to keep the current one.
       options:
         - languages
         - frontend
@@ -49,37 +61,32 @@ body:
         - ai
         - enterprise
         - devops
-    validations:
-      required: true
 
   - type: dropdown
     id: proficiency
     attributes:
       label: Proficiency
+      description: Required for a new skill. Leave unselected to keep the current one.
       options:
         - Expert
         - Advanced
         - Intermediate
-    validations:
-      required: true
 
   - type: input
     id: yearsExperience
     attributes:
       label: Years of experience
-      description: A whole number.
+      description: A whole number. Required for a new skill.
       placeholder: '1'
-    validations:
-      required: true
 
   - type: textarea
     id: description
     attributes:
       label: Description
-      description: One sentence on what you actually used it for. Not what it is.
+      description: >-
+        One sentence on what you actually used it for. Not what it is. Required
+        for a new skill.
       placeholder: The orchestration layer behind the agent mesh's planning loop.
-    validations:
-      required: true
 
   - type: input
     id: relatedProjectIds
@@ -87,5 +94,6 @@ body:
       label: Related project ids
       description: >-
         Optional, comma-separated. Must match ids already in the Work section —
-        an unknown id fails the check and the issue stays open.
+        an unknown id fails the check and the issue stays open. Filling this in
+        replaces the whole list, so repeat the ids you want to keep.
       placeholder: nexus, job-crm

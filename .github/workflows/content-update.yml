@@ -19,7 +19,11 @@ concurrency:
 jobs:
   apply:
     # Only the repo owner can move content. An issue form is a public inbox.
+    #
+    # The state check is what stops a *closed* issue being edited — to fix a typo
+    # in the record, say — from replaying a change that has already been made.
     if: >-
+      github.event.issue.state == 'open' &&
       contains(github.event.issue.labels.*.name, 'content') &&
       github.event.issue.author_association == 'OWNER'
     runs-on: ubuntu-latest
@@ -85,7 +89,12 @@ jobs:
 
           Committed as \`${SHA}\`. The site redeploys from \`main\`."
             gh issue close "$ISSUE_NUMBER" --reason completed
-          else
+          # Filing through a form fires `opened` *and* `labeled`, so this workflow
+          # runs twice for one submission. The second run is harmless — the edit
+          # is a merge, so re-applying it produces no diff — but it must not
+          # overwrite the first run's verdict. Live state, not the event payload:
+          # by now the first run has closed the issue.
+          elif [ "$(gh issue view "$ISSUE_NUMBER" --json state -q .state)" = "OPEN" ]; then
             gh issue comment "$ISSUE_NUMBER" --body "Nothing changed — the content already said this. Closing."
             gh issue close "$ISSUE_NUMBER" --reason "not planned"
           fi
