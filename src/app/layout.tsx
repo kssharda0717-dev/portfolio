@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter_Tight, Instrument_Serif, Caveat } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
 import { portfolioConfig } from '@config';
 import './globals.css';
 
@@ -74,6 +75,7 @@ export default function RootLayout({
           Skip to content
         </a>
         {children}
+        <Analytics />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
