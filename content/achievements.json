@@ -1,0 +1,62 @@
+[
+  {
+    "id": "csat",
+    "value": "9.5",
+    "valueSuffix": "/10",
+    "title": "Client satisfaction, nine months running",
+    "kicker": "CVS HEALTH · FORTUNE 500",
+    "detail": "Sustained above 9.5/10 for nine consecutive months while translating SQR and PeopleCode logic into plain language for stakeholders.",
+    "iconName": "Award"
+  },
+  {
+    "id": "zero-failures",
+    "value": "Zero",
+    "title": "Transmission failures",
+    "kicker": "GE AEROSPACE · PGP KEY LIFECYCLE",
+    "detail": "Owned encryption key renewal across every vendor transmission for the full engagement, coordinating client renewals ahead of expiry.",
+    "iconName": "ShieldCheck"
+  },
+  {
+    "id": "tools",
+    "value": "10,000",
+    "valueSuffix": "+",
+    "title": "AI tools catalogued",
+    "kicker": "EVERYTHININAI · 24/7 PIPELINE",
+    "detail": "Discovered and classified at 1,200–2,000 net-new per day, with zero failures over a sustained 24-hour run.",
+    "iconName": "Database"
+  },
+  {
+    "id": "tests",
+    "value": "999",
+    "title": "Automated tests written",
+    "kicker": "ACROSS FOUR SYSTEMS",
+    "detail": "424 on the reconciliation platform, 270+ on the agent mesh, 240 on the CRM proxy and 65 on the rule engine — one named test per fixed defect.",
+    "iconName": "CircleCheck"
+  },
+  {
+    "id": "brokerage",
+    "value": "₹12",
+    "valueSuffix": " lakh",
+    "title": "Unpaid brokerage surfaced",
+    "kicker": "SHARDA SOLUTIONS · MONTH ONE",
+    "detail": "Nineteen live holdings earning no brokerage at all, isolated from 32,330 statement lines in the first month of real use.",
+    "iconName": "TrendingUp"
+  },
+  {
+    "id": "accuracy",
+    "value": "20",
+    "valueSuffix": "%",
+    "title": "Tax-calculation accuracy gain",
+    "kicker": "PEOPLESOFT NA PAYROLL · SQR",
+    "detail": "Built an end-to-end SQR deriving pay-group-specific tax policy, cutting manual correction effort every cycle.",
+    "iconName": "Calculator"
+  },
+  {
+    "id": "ndcg",
+    "value": "0.710",
+    "title": "Retrieval nDCG@3, up from 0.544",
+    "kicker": "JOB SEARCH CRM · MEASURED",
+    "detail": "Two-lens fusion plus an LLM reranker. Hit-rate 0.667 → 0.833, forbidden-chunk violations 5/6 → 1/6, with committed gates that fail the build.",
+    "iconName": "Target"
+  }
+]

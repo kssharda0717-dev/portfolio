@@ -1,0 +1,75 @@
+name: Change role or add a job
+description: New title, new subline, or a new entry at the top of the experience timeline.
+title: 'content: role'
+labels: ['content', 'content:role']
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Every field is optional — fill in only what changed. The first four
+        rewrite the hero and the share preview. The last four add a job to the
+        top of the timeline, and are only applied if **Job role** is filled in.
+
+  - type: input
+    id: roleTitle
+    attributes:
+      label: Role title
+      description: The big line in the hero, and the jobTitle in the structured data.
+      placeholder: AI Solutions Engineer
+
+  - type: input
+    id: heroSubline
+    attributes:
+      label: Hero subline
+      description: The short line under the title.
+      placeholder: Enterprise payroll · agentic AI
+
+  - type: textarea
+    id: headline
+    attributes:
+      label: Long-form positioning
+      description: The full sentence, certifications and all.
+      placeholder: Oracle Fusion HCM Consultant (Certified) · AI & Automation Engineer
+
+  - type: input
+    id: seoTitle
+    attributes:
+      label: Share-preview title
+      description: What appears in the browser tab and on a shared link.
+      placeholder: Kartik Sharda — AI Solutions Engineer
+
+  - type: textarea
+    id: seoDescription
+    attributes:
+      label: Share-preview description
+      description: One or two sentences. This is the paragraph under the link on LinkedIn.
+
+  - type: markdown
+    attributes:
+      value: '---'
+
+  - type: input
+    id: jobRole
+    attributes:
+      label: Job role
+      description: Fill this in only if you are adding a job to the timeline.
+      placeholder: AI Solutions Engineer
+
+  - type: input
+    id: jobOrganisation
+    attributes:
+      label: Organisation
+      placeholder: Some Company
+
+  - type: input
+    id: jobPeriod
+    attributes:
+      label: Period
+      description: Use an em dash, and "Present" for the current role.
+      placeholder: Jan 2027 — Present
+
+  - type: textarea
+    id: jobHighlights
+    attributes:
+      label: Highlights
+      description: One per line, three to five of them.

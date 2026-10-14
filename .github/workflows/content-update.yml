@@ -1,0 +1,107 @@
+name: Content update
+
+# Fill in an issue form, and this edits content/*.json, type-checks the result,
+# commits it and lets the host redeploy. The issue is the audit trail: what was
+# asked for, what changed, and the commit it became.
+on:
+  issues:
+    types: [opened, edited, labeled]
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  # Content edits are commits to main; running two at once would race.
+  group: content-update
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    # Only the repo owner can move content. An issue form is a public inbox.
+    if: >-
+      contains(github.event.issue.labels.*.name, 'content') &&
+      github.event.issue.author_association == 'OWNER'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Apply the issue to content/*.json
+        id: apply
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_LABELS: ${{ join(github.event.issue.labels.*.name, ',') }}
+        run: |
+          set -o pipefail
+          node scripts/apply-content-issue.mjs 2>error.txt | tee summary.txt
+
+      - name: Type check and lint
+        run: |
+          npx tsc --noEmit
+          npm run lint
+
+      - name: Build
+        # The real gate. A content edit that cannot be rendered is not an edit.
+        run: npm run build
+
+      - name: Commit
+        id: commit
+        env:
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- content; then
+            echo "No change — the content already said this."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git add content
+          git commit -m "content: $(cat summary.txt | sed 's/\*\*//g')" -m "Closes #${ISSUE_NUMBER}"
+          git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Report success
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          CHANGED: ${{ steps.commit.outputs.changed }}
+          SHA: ${{ steps.commit.outputs.sha }}
+        run: |
+          if [ "$CHANGED" = "true" ]; then
+            gh issue comment "$ISSUE_NUMBER" --body "$(cat summary.txt)
+
+          Committed as \`${SHA}\`. The site redeploys from \`main\`."
+            gh issue close "$ISSUE_NUMBER" --reason completed
+          else
+            gh issue comment "$ISSUE_NUMBER" --body "Nothing changed — the content already said this. Closing."
+            gh issue close "$ISSUE_NUMBER" --reason "not planned"
+          fi
+
+      - name: Report failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          # Nothing was pushed, so editing the issue and saving re-runs this.
+          gh issue comment "$ISSUE_NUMBER" --body "Could not apply this.
+
+          \`\`\`
+          $(cat error.txt 2>/dev/null | head -20 || echo 'See the run log.')
+          \`\`\`
+
+          Nothing was committed. Edit the issue and save — that re-runs the check. [Full log]($RUN_URL)"

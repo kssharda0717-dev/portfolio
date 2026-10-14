@@ -1,26 +1,231 @@
 @import "tailwindcss";
 
+/* ──────────────────────────────────────────────────────────────
+   Design tokens — warm paper / deep navy ink, print-magazine feel
+   ────────────────────────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --paper: #f3efe7;
+  --paper-raised: #faf7f1;
+  --paper-sunk: #e8e2d6;
+  --ink: #141b33;
+  --ink-soft: #3d4663;
+  /* 4.68:1 on --paper — the smallest type on the page must still clear AA */
+  --ink-faint: #636980;
+  --rule: #c9c2b4;
+  --accent: #5b43d6;
+  --accent-soft: #ece8fb;
+
+  --shell-x: clamp(1.25rem, 5vw, 5.5rem);
+  --section-y: clamp(5rem, 11vw, 9.5rem);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-paper: var(--paper);
+  --color-paper-raised: var(--paper-raised);
+  --color-paper-sunk: var(--paper-sunk);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-faint: var(--ink-faint);
+  --color-rule: var(--rule);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --font-sans: var(--font-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-serif-display), ui-serif, Georgia, serif;
+  --font-script: var(--font-script), cursive;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  min-width: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* clearance for the floating pill nav on anchor jumps */
+  scroll-padding-top: 7rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-grotesk), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* ── Typographic primitives ─────────────────────────────────── */
+
+/* Tight grotesk — the first half of every headline */
+.display {
+  font-family: var(--font-grotesk), sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.038em;
+  line-height: 0.95;
+}
+
+/* Italic serif — the second half of every headline */
+.display-em {
+  font-family: var(--font-serif-display), serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+.script {
+  font-family: var(--font-script), cursive;
+  font-weight: 400;
+}
+
+.eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.section-number {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  color: var(--ink-faint);
+}
+
+.hairline {
+  height: 1px;
+  background: var(--rule);
+  border: 0;
+}
+
+.shell {
+  width: 100%;
+  padding-inline: var(--shell-x);
+  margin-inline: auto;
+  max-width: 96rem;
+}
+
+/* ── Controls ───────────────────────────────────────────────── */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  padding: 0.6rem 1.15rem;
+  font-size: 0.8125rem;
+  background: transparent;
+  color: var(--ink);
+  transition: background-color 0.28s ease, color 0.28s ease, transform 0.28s ease;
+}
+
+.pill:hover,
+.pill[aria-pressed='true'] {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.pill:active {
+  transform: translateY(1px);
+}
+
+/* The nav pill row scrolls on a phone; a visible bar would sit on the pills. */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+:where(a, button, [tabindex]):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Faint fibre grain over the paper */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(20, 27, 51, 0.035) 1px,
+    transparent 0
+  );
+  background-size: 4px 4px;
+}
+
+/* ── Motion ─────────────────────────────────────────────────── */
+
+/* `both` fill means the element always settles visible, with or without JS. */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise-in {
+  animation: rise-in 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* The ID card hangs off the lanyard ring and swings from that point. */
+@keyframes lanyard-sway {
+  0%,
+  100% {
+    transform: rotate(-1.6deg);
+  }
+  50% {
+    transform: rotate(1.6deg);
+  }
+}
+
+.idcard-sway {
+  transform-origin: top center;
+  animation: lanyard-sway 7s ease-in-out infinite;
+}
+
+/* Pause the swing while the card is being read, so the flip stays legible. */
+.idcard-sway:hover,
+.idcard-sway:focus-within {
+  animation-play-state: paused;
+}
+
+/*
+  Below `md` the timeline rail sits at the left edge, so every row — marker and
+  card alike — has to enter from the left. The desktop layout alternates sides,
+  and a rightward entrance on a 375px screen overhangs the viewport and gives
+  the whole document a horizontal scrollbar. TimelineRow sets --slide-dir
+  inline, so the override needs `!important` to beat an inline declaration.
+*/
+@media (width < 48rem) {
+  .timeline-slide {
+    --slide-dir: -1 !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

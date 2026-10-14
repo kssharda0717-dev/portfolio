@@ -1,0 +1,91 @@
+name: Add a skill
+description: A new element in the periodic table of the stack.
+title: 'content: add skill'
+labels: ['content', 'content:skill']
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        You do not pick a grid position — the Action finds the first free cell in
+        the right category block for you. If the tool has a logo in Simple Icons
+        it appears automatically; if not it falls back to the monogram, which is
+        the periodic-table conceit anyway.
+
+  - type: input
+    id: id
+    attributes:
+      label: Short id
+      description: Lowercase, hyphenated.
+      placeholder: langgraph
+    validations:
+      required: true
+
+  - type: input
+    id: name
+    attributes:
+      label: Name
+      placeholder: LangGraph
+    validations:
+      required: true
+
+  - type: input
+    id: symbol
+    attributes:
+      label: Symbol
+      description: One or two characters, like a chemical symbol. Capital then lowercase.
+      placeholder: Lg
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - languages
+        - frontend
+        - backend
+        - data
+        - ai
+        - enterprise
+        - devops
+    validations:
+      required: true
+
+  - type: dropdown
+    id: proficiency
+    attributes:
+      label: Proficiency
+      options:
+        - Expert
+        - Advanced
+        - Intermediate
+    validations:
+      required: true
+
+  - type: input
+    id: yearsExperience
+    attributes:
+      label: Years of experience
+      description: A whole number.
+      placeholder: '1'
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: One sentence on what you actually used it for. Not what it is.
+      placeholder: The orchestration layer behind the agent mesh's planning loop.
+    validations:
+      required: true
+
+  - type: input
+    id: relatedProjectIds
+    attributes:
+      label: Related project ids
+      description: >-
+        Optional, comma-separated. Must match ids already in the Work section —
+        an unknown id fails the check and the issue stays open.
+      placeholder: nexus, job-crm

@@ -1,0 +1,103 @@
+name: Add or update a project
+description: A new entry in the Work accordion, or a change to one that is already there.
+title: 'content: project'
+labels: ['content', 'content:project']
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        If the **id** matches a project that already exists, that project is
+        replaced. Otherwise a new one is added to the top of the accordion.
+
+  - type: input
+    id: id
+    attributes:
+      label: Short id
+      description: >-
+        Lowercase, hyphenated, no spaces. This is the permanent handle — skills
+        cross-link to it, so changing it on an existing project breaks those links.
+      placeholder: new-thing
+    validations:
+      required: true
+
+  - type: input
+    id: title
+    attributes:
+      label: Title
+      description: Shown on the accordion spine.
+      placeholder: New Thing — What It Does
+    validations:
+      required: true
+
+  - type: input
+    id: eyebrow
+    attributes:
+      label: Eyebrow
+      description: The small line above the title. Two or three words, separated by a middle dot.
+      placeholder: Agentic AI · RAG
+    validations:
+      required: true
+
+  - type: textarea
+    id: shortDescription
+    attributes:
+      label: Description
+      description: Two or three sentences on the problem it solves. Prose, not bullets.
+    validations:
+      required: true
+
+  - type: textarea
+    id: featureHighlights
+    attributes:
+      label: Highlights
+      description: One per line, four to six of them. Concrete beats adjectival.
+      placeholder: |
+        Orchestrator routing to four sub-agents
+        Circuit breaker trips instead of burning quota
+        Guardrail validator on every tool call
+    validations:
+      required: true
+
+  - type: input
+    id: techStackTags
+    attributes:
+      label: Tech stack
+      description: Comma-separated.
+      placeholder: Python, FastAPI, Postgres
+    validations:
+      required: true
+
+  - type: input
+    id: statValue
+    attributes:
+      label: Pull-stat figure
+      description: Optional. The big number on the open panel, e.g. 424.
+      placeholder: '424'
+
+  - type: input
+    id: statLabel
+    attributes:
+      label: Pull-stat label
+      description: Optional. What the figure counts, e.g. automated tests.
+      placeholder: automated tests
+
+  - type: input
+    id: githubUrl
+    attributes:
+      label: GitHub URL
+      description: Leave blank if the source cannot be published.
+
+  - type: input
+    id: liveDemoUrl
+    attributes:
+      label: Live demo URL
+      description: Optional.
+
+  - type: input
+    id: availabilityNote
+    attributes:
+      label: Availability note
+      description: >-
+        Shown in place of the links when there is no public repo. Fill in either
+        this or GitHub URL — not both.
+      placeholder: Client work — source not public.

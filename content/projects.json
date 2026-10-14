@@ -1,0 +1,181 @@
+[
+  {
+    "id": "nexus",
+    "eyebrow": "Multi-agent systems · Google Hackathon",
+    "title": "NEXUS — Autonomous Executive OS",
+    "shortDescription": "A multi-agent mesh that acts without being asked. A primary orchestrator routes to planning, learning, life-admin and proactive-monitor sub-agents, with a scheduler watchdog that initiates work on its own. Built for a Google hackathon.",
+    "featureHighlights": [
+      "Orchestrator routing to four sub-agents",
+      "LLM router: 8 endpoints across 4 models",
+      "Circuit breaker trips instead of burning quota",
+      "Guardrail validator on every tool call",
+      "MCP bridge to Microsoft Graph and Slack",
+      "Missing credentials degrade to 501s"
+    ],
+    "techStackTags": [
+      "Python",
+      "FastAPI",
+      "Gemini",
+      "MCP",
+      "Docker",
+      "APScheduler",
+      "JWT"
+    ],
+    "statValue": "270+",
+    "statLabel": "automated tests",
+    "githubUrl": "https://github.com/kssharda0717-dev/nexus-executive-os",
+    "liveDemoUrl": "https://nexus-executive-os-367234613041.asia-south1.run.app"
+  },
+  {
+    "id": "sharda-solutions",
+    "eyebrow": "Financial reconciliation · Offline-first",
+    "title": "Sharda Solutions — Commission Reconciliation",
+    "shortDescription": "A desktop application that answers one question every month: did I get paid what I earned? It reconciles insurer commission statements and mutual-fund brokerage against the records a distributor actually holds, and names everything that was not paid.",
+    "featureHighlights": [
+      "32,330 brokerage lines grouped to 1,276 holdings",
+      "19 live holdings found earning no brokerage",
+      "SCD Type 2 ledger that closes, never deletes",
+      "Deterministic no-model path for figures that must tie",
+      "Signed native app for macOS and Windows",
+      "Distinct-period query cut from 30ms to 0.06ms"
+    ],
+    "techStackTags": [
+      "Python",
+      "SQLite",
+      "PyWebView",
+      "Gemini",
+      "openpyxl",
+      "PyInstaller"
+    ],
+    "statValue": "424",
+    "statLabel": "automated tests",
+    "availabilityNote": "Private — runs on a real distributor’s monthly books. No public repository or demo."
+  },
+  {
+    "id": "job-crm",
+    "eyebrow": "Hybrid RAG · Agentic drafting",
+    "title": "AI-Native Job Search CRM",
+    "shortDescription": "A Chrome extension and local proxy that makes the CRM a byproduct of applying. It tracks applications as they are submitted, vaults the exact resume sent, maps the people you connect with onto those applications, and drafts outreach grounded in your own resume text.",
+    "featureHighlights": [
+      "Two-lens hybrid retrieval, fused by RRF",
+      "LLM reranker drops contentless evidence",
+      "Every number checked against retrieved text",
+      "nDCG@3 lifted 0.544 → 0.710",
+      "Committed eval gates fail the build",
+      "Never clicks Send, never views a profile"
+    ],
+    "techStackTags": [
+      "TypeScript",
+      "Hono",
+      "Supabase",
+      "pgvector",
+      "OpenAI",
+      "Plasmo",
+      "zod"
+    ],
+    "statValue": "240",
+    "statLabel": "tests · 47 suites",
+    "availabilityNote": "Private — the proxy holds live credentials. Repository not yet published."
+  },
+  {
+    "id": "everythininai",
+    "eyebrow": "Data pipelines · Unattended automation",
+    "title": "EverythinInAI — AI-Tool Discovery Engine",
+    "shortDescription": "A pipeline that runs around the clock cataloguing the AI tool landscape: collection from GitHub, Hacker News and RSS, a weighted heuristic pre-filter, classification into a nine-way taxonomy, then deduplication. My own idea, from ideology to invention.",
+    "featureHighlights": [
+      "10,000+ tools catalogued",
+      "1,200–2,000 net-new per day",
+      "Zero failures over a sustained 24-hour run",
+      "Cost-guard breaker refuses calls past a spend cap",
+      "Resumable backfill survives a crash mid-run",
+      "16 systemd units as configuration-as-code"
+    ],
+    "techStackTags": [
+      "Node.js",
+      "TypeScript",
+      "Supabase",
+      "Gemini",
+      "React",
+      "Vite",
+      "systemd"
+    ],
+    "statValue": "30k",
+    "statLabel": "lines shipped",
+    "githubUrl": "https://github.com/kssharda0717-dev/EverythinInAI",
+    "liveDemoUrl": "https://everythin-in-ai-iug3.vercel.app"
+  },
+  {
+    "id": "pe-intelligence",
+    "eyebrow": "Natural-language analytics · Local-first",
+    "title": "PE Intelligence",
+    "shortDescription": "English and Hinglish questions turned into SQL over a 1.5-million-row trade warehouse. The model writes the query; the laptop runs it. Only the column names and your question ever leave the machine, so when compliance asks where the data went, the answer is nowhere.",
+    "featureHighlights": [
+      "1.5M-row warehouse queried in plain English",
+      "The privacy firewall — no row ever leaves",
+      "Five swappable model backends",
+      "~2 second cold start",
+      "Zero-terminal install, silent env bootstrap",
+      "Hinglish queries supported"
+    ],
+    "techStackTags": [
+      "Python",
+      "DuckDB",
+      "Gemini",
+      "OpenAI",
+      "Claude",
+      "PyInstaller"
+    ],
+    "statValue": "1.5M",
+    "statLabel": "rows, all local",
+    "availabilityNote": "Private — built for a specific operator’s trade data. No public repository or demo."
+  },
+  {
+    "id": "marque-motors",
+    "eyebrow": "Full stack · Automation · CRM",
+    "title": "Marque Motors — Automated Lead Ecosystem",
+    "shortDescription": "A three-part system for a luxury dealership, built in three days as one monorepo. A customer enquiry flows from the public portal, through an automation brain that enriches and scores it, into a secure internal CRM — end to end.",
+    "featureHighlights": [
+      "Portal with its own BFF fusing NHTSA safety data",
+      "13-node enrichment and LLM scoring pipeline",
+      "CRM with auth, row-level security and realtime",
+      "Idempotent upserts on a dedupe key",
+      "Retry with back-off, graceful degradation",
+      "Built in three days"
+    ],
+    "techStackTags": [
+      "Next.js",
+      "n8n",
+      "Supabase",
+      "Gemini",
+      "TypeScript",
+      "Tailwind CSS"
+    ],
+    "statValue": "3",
+    "statLabel": "days, end to end",
+    "githubUrl": "https://github.com/kssharda0717-dev/marque-motors",
+    "liveDemoUrl": "https://marque-motors.vercel.app"
+  },
+  {
+    "id": "kyb-triage",
+    "eyebrow": "Compliance · Deterministic rule engines",
+    "title": "KYB Triage Rulebook",
+    "shortDescription": "Business onboarding is slow when the criteria live in people’s heads. This writes an AML policy down as rules a script can apply, clears low-risk cases with nobody touching them, and sends everything else to the right person with the reason and an evidence pack.",
+    "featureHighlights": [
+      "Every rule cites a policy clause, or load fails",
+      "No model in the decision path — auditable",
+      "Hash-chained, tamper-evident audit log",
+      "Fails closed; replayable as of any past date",
+      "Impact analysis before rulebook sign-off",
+      "5 of 6 alerts cleared by rule"
+    ],
+    "techStackTags": [
+      "Python",
+      "YAML",
+      "pytest",
+      "Jupyter"
+    ],
+    "statValue": "65",
+    "statLabel": "tests, incl. tamper attempts",
+    "githubUrl": "https://github.com/kssharda0717-dev/kyb-triage-rulebook"
+  }
+]

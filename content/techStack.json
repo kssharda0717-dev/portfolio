@@ -1,0 +1,683 @@
+[
+  {
+    "id": "python",
+    "symbol": "Py",
+    "name": "Python",
+    "category": "languages",
+    "proficiency": "Expert",
+    "yearsExperience": 5,
+    "description": "The spine of every system I have shipped — FastAPI services, reconciliation engines, agent meshes and rule engines.",
+    "relatedProjectIds": [
+      "nexus",
+      "sharda-solutions",
+      "pe-intelligence",
+      "kyb-triage"
+    ],
+    "row": 1,
+    "col": 1
+  },
+  {
+    "id": "typescript",
+    "symbol": "Ts",
+    "name": "TypeScript",
+    "category": "languages",
+    "proficiency": "Advanced",
+    "yearsExperience": 3,
+    "description": "Used end to end on the discovery engine and the job-search CRM, with zod schemas shared between client and server.",
+    "relatedProjectIds": [
+      "everythininai",
+      "job-crm",
+      "marque-motors"
+    ],
+    "row": 1,
+    "col": 2
+  },
+  {
+    "id": "javascript",
+    "symbol": "Js",
+    "name": "JavaScript",
+    "category": "languages",
+    "proficiency": "Advanced",
+    "yearsExperience": 4,
+    "description": "Vanilla ES5-compatible front ends where a build step would have been a liability, and Node collectors everywhere else.",
+    "relatedProjectIds": [
+      "sharda-solutions",
+      "everythininai"
+    ],
+    "row": 1,
+    "col": 3
+  },
+  {
+    "id": "sql",
+    "symbol": "Sq",
+    "name": "SQL",
+    "category": "languages",
+    "proficiency": "Expert",
+    "yearsExperience": 6,
+    "description": "From payroll tables at CVS Health to a recursive loose-index skip scan that cut a query from 30ms to 0.06ms.",
+    "relatedProjectIds": [
+      "sharda-solutions",
+      "pe-intelligence",
+      "job-crm"
+    ],
+    "row": 1,
+    "col": 4
+  },
+  {
+    "id": "sqr",
+    "symbol": "Sr",
+    "name": "SQR",
+    "category": "languages",
+    "proficiency": "Expert",
+    "yearsExperience": 4,
+    "description": "Built the end-to-end tax engine that read Job Data, derived pay-group tax policy and posted to payroll tables — ~20% accuracy gain.",
+    "relatedProjectIds": [],
+    "row": 1,
+    "col": 5
+  },
+  {
+    "id": "peoplecode",
+    "symbol": "Pc",
+    "name": "PeopleCode",
+    "category": "languages",
+    "proficiency": "Advanced",
+    "yearsExperience": 4,
+    "description": "Impact analysis and development across PeopleSoft HCM objects on PeopleTools 8.59 / 9.1.",
+    "relatedProjectIds": [],
+    "row": 1,
+    "col": 6
+  },
+  {
+    "id": "oracle-fusion",
+    "symbol": "Of",
+    "name": "Oracle Fusion HCM",
+    "category": "enterprise",
+    "proficiency": "Advanced",
+    "yearsExperience": 1,
+    "description": "Certified in Cloud Applications HCM Process Essentials. Core HR, Payroll and Workforce Management.",
+    "relatedProjectIds": [],
+    "row": 1,
+    "col": 10
+  },
+  {
+    "id": "react",
+    "symbol": "Re",
+    "name": "React",
+    "category": "frontend",
+    "proficiency": "Advanced",
+    "yearsExperience": 3,
+    "description": "Side panels, dashboards and directories — React 18 and 19 across the CRM extension and the discovery engine client.",
+    "relatedProjectIds": [
+      "everythininai",
+      "job-crm",
+      "marque-motors"
+    ],
+    "row": 2,
+    "col": 1
+  },
+  {
+    "id": "nextjs",
+    "symbol": "Nx",
+    "name": "Next.js",
+    "category": "frontend",
+    "proficiency": "Advanced",
+    "yearsExperience": 2,
+    "description": "App Router with a backend-for-frontend fusing vehicle and NHTSA safety data on the Marque Motors portal.",
+    "relatedProjectIds": [
+      "marque-motors"
+    ],
+    "row": 2,
+    "col": 2
+  },
+  {
+    "id": "tailwind",
+    "symbol": "Tw",
+    "name": "Tailwind CSS",
+    "category": "frontend",
+    "proficiency": "Advanced",
+    "yearsExperience": 3,
+    "description": "Design tokens as utilities. Vendored locally where a build step was not an option.",
+    "relatedProjectIds": [
+      "sharda-solutions",
+      "everythininai",
+      "job-crm",
+      "marque-motors"
+    ],
+    "row": 2,
+    "col": 3
+  },
+  {
+    "id": "framer-motion",
+    "symbol": "Fm",
+    "name": "Framer Motion",
+    "category": "frontend",
+    "proficiency": "Intermediate",
+    "yearsExperience": 2,
+    "description": "Motion that means something — state transitions and reveals, never decoration for its own sake.",
+    "relatedProjectIds": [
+      "everythininai",
+      "marque-motors"
+    ],
+    "row": 2,
+    "col": 4
+  },
+  {
+    "id": "vite",
+    "symbol": "Vi",
+    "name": "Vite",
+    "category": "frontend",
+    "proficiency": "Advanced",
+    "yearsExperience": 2,
+    "description": "Dev server and bundler for the EverythinInAI client, with an API proxy onto the engine.",
+    "relatedProjectIds": [
+      "everythininai"
+    ],
+    "row": 2,
+    "col": 5
+  },
+  {
+    "id": "peoplesoft",
+    "symbol": "Ps",
+    "name": "PeopleSoft HCM",
+    "category": "enterprise",
+    "proficiency": "Expert",
+    "yearsExperience": 4,
+    "description": "North America Payroll for CVS Health. Pay Calendars, Pay Groups, Pay Sheets, EFT, gross-to-net, go-live and hypercare.",
+    "relatedProjectIds": [],
+    "row": 2,
+    "col": 8
+  },
+  {
+    "id": "fast-formula",
+    "symbol": "Ff",
+    "name": "Fast Formula",
+    "category": "enterprise",
+    "proficiency": "Intermediate",
+    "yearsExperience": 1,
+    "description": "Mapping proven PeopleCode payroll logic onto Fusion Fast Formula to shorten ramp-up on live engagements.",
+    "relatedProjectIds": [],
+    "row": 2,
+    "col": 9
+  },
+  {
+    "id": "hdl",
+    "symbol": "Hd",
+    "name": "HCM Data Loader",
+    "category": "enterprise",
+    "proficiency": "Intermediate",
+    "yearsExperience": 1,
+    "description": "HDL and HSDL bulk loading against Fusion Core HR and Payroll objects.",
+    "relatedProjectIds": [],
+    "row": 2,
+    "col": 10
+  },
+  {
+    "id": "fastapi",
+    "symbol": "Fa",
+    "name": "FastAPI",
+    "category": "backend",
+    "proficiency": "Advanced",
+    "yearsExperience": 2,
+    "description": "The HTTP surface of the NEXUS agent mesh, secured with bcrypt hashing, JWT session cookies and request rate limiting.",
+    "relatedProjectIds": [
+      "nexus"
+    ],
+    "row": 3,
+    "col": 1
+  },
+  {
+    "id": "nodejs",
+    "symbol": "Nd",
+    "name": "Node.js",
+    "category": "backend",
+    "proficiency": "Advanced",
+    "yearsExperience": 3,
+    "description": "A 24/7 collection and classification pipeline that ran without failure over a sustained 24-hour window.",
+    "relatedProjectIds": [
+      "everythininai",
+      "job-crm"
+    ],
+    "row": 3,
+    "col": 2
+  },
+  {
+    "id": "express",
+    "symbol": "Ex",
+    "name": "Express",
+    "category": "backend",
+    "proficiency": "Advanced",
+    "yearsExperience": 3,
+    "description": "The unified server that serves the EverythinInAI client and its API routes from one process.",
+    "relatedProjectIds": [
+      "everythininai"
+    ],
+    "row": 3,
+    "col": 3
+  },
+  {
+    "id": "hono",
+    "symbol": "Ho",
+    "name": "Hono",
+    "category": "backend",
+    "proficiency": "Intermediate",
+    "yearsExperience": 1,
+    "description": "The local proxy that holds every secret the browser extension must never see.",
+    "relatedProjectIds": [
+      "job-crm"
+    ],
+    "row": 3,
+    "col": 4
+  },
+  {
+    "id": "rest",
+    "symbol": "Rs",
+    "name": "REST & OAuth2",
+    "category": "backend",
+    "proficiency": "Advanced",
+    "yearsExperience": 4,
+    "description": "Microsoft Graph, Slack, Gemini and OpenAI — authorisation-code flow with delegated mail and calendar scopes.",
+    "relatedProjectIds": [
+      "nexus",
+      "job-crm"
+    ],
+    "row": 3,
+    "col": 5
+  },
+  {
+    "id": "otbi",
+    "symbol": "Ot",
+    "name": "OTBI",
+    "category": "enterprise",
+    "proficiency": "Intermediate",
+    "yearsExperience": 1,
+    "description": "Transactional business intelligence reporting across Fusion HCM subject areas.",
+    "relatedProjectIds": [],
+    "row": 3,
+    "col": 8
+  },
+  {
+    "id": "bi-publisher",
+    "symbol": "Bp",
+    "name": "BI Publisher",
+    "category": "enterprise",
+    "proficiency": "Intermediate",
+    "yearsExperience": 1,
+    "description": "Pixel-perfect payroll and HR reporting layered on HCM Extracts.",
+    "relatedProjectIds": [],
+    "row": 3,
+    "col": 9
+  },
+  {
+    "id": "app-engine",
+    "symbol": "Ae",
+    "name": "Application Engine",
+    "category": "enterprise",
+    "proficiency": "Advanced",
+    "yearsExperience": 4,
+    "description": "Batch processing across PeopleSoft HCM, and the impact analysis that kept releases from breaking production.",
+    "relatedProjectIds": [],
+    "row": 3,
+    "col": 10
+  },
+  {
+    "id": "postgres",
+    "symbol": "Pg",
+    "name": "PostgreSQL",
+    "category": "data",
+    "proficiency": "Advanced",
+    "yearsExperience": 3,
+    "description": "Row-level security, generated tsvector columns and a reciprocal-rank-fusion function living in the database.",
+    "relatedProjectIds": [
+      "job-crm",
+      "marque-motors",
+      "everythininai"
+    ],
+    "row": 4,
+    "col": 1
+  },
+  {
+    "id": "supabase",
+    "symbol": "Sb",
+    "name": "Supabase",
+    "category": "data",
+    "proficiency": "Advanced",
+    "yearsExperience": 2,
+    "description": "Auth, RLS, realtime and private storage buckets — three products run on it.",
+    "relatedProjectIds": [
+      "everythininai",
+      "job-crm",
+      "marque-motors"
+    ],
+    "row": 4,
+    "col": 2
+  },
+  {
+    "id": "sqlite",
+    "symbol": "Sl",
+    "name": "SQLite",
+    "category": "data",
+    "proficiency": "Expert",
+    "yearsExperience": 2,
+    "description": "The local vault behind an offline-first desktop app: WAL mode, one connection per thread, explicit transactions.",
+    "relatedProjectIds": [
+      "sharda-solutions"
+    ],
+    "row": 4,
+    "col": 3
+  },
+  {
+    "id": "duckdb",
+    "symbol": "Dd",
+    "name": "DuckDB",
+    "category": "data",
+    "proficiency": "Advanced",
+    "yearsExperience": 1,
+    "description": "A 1.5-million-row trade warehouse queried on the user’s own laptop, so no row ever leaves the building.",
+    "relatedProjectIds": [
+      "pe-intelligence"
+    ],
+    "row": 4,
+    "col": 4
+  },
+  {
+    "id": "oracle-db",
+    "symbol": "Or",
+    "name": "Oracle DB",
+    "category": "data",
+    "proficiency": "Advanced",
+    "yearsExperience": 5,
+    "description": "The database under every PeopleSoft payroll object I configured, queried and reconciled.",
+    "relatedProjectIds": [],
+    "row": 4,
+    "col": 5
+  },
+  {
+    "id": "pgvector",
+    "symbol": "Pv",
+    "name": "pgvector",
+    "category": "data",
+    "proficiency": "Advanced",
+    "yearsExperience": 1,
+    "description": "Dense retrieval over resume chunks, fused with Postgres full-text ranking by reciprocal rank fusion.",
+    "relatedProjectIds": [
+      "job-crm"
+    ],
+    "row": 4,
+    "col": 6
+  },
+  {
+    "id": "pandas",
+    "symbol": "Pd",
+    "name": "pandas & openpyxl",
+    "category": "data",
+    "proficiency": "Advanced",
+    "yearsExperience": 3,
+    "description": "Deterministic, cell-by-cell spreadsheet reading audited against the document’s own printed total, to the paisa.",
+    "relatedProjectIds": [
+      "sharda-solutions"
+    ],
+    "row": 4,
+    "col": 7
+  },
+  {
+    "id": "ps-query",
+    "symbol": "Pq",
+    "name": "PS Query",
+    "category": "enterprise",
+    "proficiency": "Expert",
+    "yearsExperience": 4,
+    "description": "Including the deferred-compensation eligibility query that removed recurring manual identification every cycle.",
+    "relatedProjectIds": [],
+    "row": 4,
+    "col": 10
+  },
+  {
+    "id": "gemini",
+    "symbol": "Ge",
+    "name": "Gemini",
+    "category": "ai",
+    "proficiency": "Expert",
+    "yearsExperience": 2,
+    "description": "Structured-output extraction with strict JSON schemas, temperature 0 and page-split retry where documents are messy.",
+    "relatedProjectIds": [
+      "sharda-solutions",
+      "everythininai",
+      "nexus",
+      "marque-motors"
+    ],
+    "row": 5,
+    "col": 1
+  },
+  {
+    "id": "openai",
+    "symbol": "Oa",
+    "name": "OpenAI",
+    "category": "ai",
+    "proficiency": "Advanced",
+    "yearsExperience": 2,
+    "description": "Embeddings and drafting for the job-search CRM, behind an interface that lets any provider be swapped in.",
+    "relatedProjectIds": [
+      "job-crm",
+      "pe-intelligence"
+    ],
+    "row": 5,
+    "col": 2
+  },
+  {
+    "id": "claude",
+    "symbol": "Cl",
+    "name": "Claude",
+    "category": "ai",
+    "proficiency": "Advanced",
+    "yearsExperience": 2,
+    "description": "One of five swappable model backends, and the coding agent I use daily — every generated line reviewed and under test.",
+    "relatedProjectIds": [
+      "pe-intelligence"
+    ],
+    "row": 5,
+    "col": 3
+  },
+  {
+    "id": "mcp",
+    "symbol": "Mc",
+    "name": "MCP",
+    "category": "ai",
+    "proficiency": "Advanced",
+    "yearsExperience": 1,
+    "description": "A Model Context Protocol bridge to Microsoft Graph and Slack that detects calendar conflicts and routes approvals back.",
+    "relatedProjectIds": [
+      "nexus"
+    ],
+    "row": 5,
+    "col": 4
+  },
+  {
+    "id": "rag",
+    "symbol": "Rg",
+    "name": "RAG",
+    "category": "ai",
+    "proficiency": "Advanced",
+    "yearsExperience": 1,
+    "description": "Two-lens hybrid retrieval — dense plus sparse, fused by RRF, then reranked. Lifted nDCG@3 from 0.544 to 0.710.",
+    "relatedProjectIds": [
+      "job-crm"
+    ],
+    "row": 5,
+    "col": 5
+  },
+  {
+    "id": "agents",
+    "symbol": "Ag",
+    "name": "Agent Orchestration",
+    "category": "ai",
+    "proficiency": "Advanced",
+    "yearsExperience": 2,
+    "description": "A primary orchestrator routing to planning, learning, life-admin and proactive-monitor sub-agents, plus a watchdog that acts unprompted.",
+    "relatedProjectIds": [
+      "nexus",
+      "job-crm"
+    ],
+    "row": 5,
+    "col": 6
+  },
+  {
+    "id": "guardrails",
+    "symbol": "Gu",
+    "name": "Guardrails",
+    "category": "ai",
+    "proficiency": "Advanced",
+    "yearsExperience": 1,
+    "description": "A validator that inspects every tool call before execution and returns a structured rejection with a suggested correction.",
+    "relatedProjectIds": [
+      "nexus",
+      "kyb-triage"
+    ],
+    "row": 5,
+    "col": 7
+  },
+  {
+    "id": "nl-sql",
+    "symbol": "Ns",
+    "name": "NL-to-SQL",
+    "category": "ai",
+    "proficiency": "Expert",
+    "yearsExperience": 1,
+    "description": "English and Hinglish questions to DuckDB SQL, sending only column names and the question — never the data.",
+    "relatedProjectIds": [
+      "pe-intelligence"
+    ],
+    "row": 5,
+    "col": 8
+  },
+  {
+    "id": "evals",
+    "symbol": "Ev",
+    "name": "Evals",
+    "category": "ai",
+    "proficiency": "Advanced",
+    "yearsExperience": 1,
+    "description": "Committed floors that fail the build. An anti-criterion without a number attached to it is a wish.",
+    "relatedProjectIds": [
+      "job-crm"
+    ],
+    "row": 5,
+    "col": 9
+  },
+  {
+    "id": "git",
+    "symbol": "Gt",
+    "name": "Git",
+    "category": "devops",
+    "proficiency": "Advanced",
+    "yearsExperience": 6,
+    "description": "Branch hygiene, reviewable history, and no secret ever committed — every repo ships an .env.example and nothing more.",
+    "relatedProjectIds": [
+      "nexus",
+      "everythininai",
+      "marque-motors",
+      "kyb-triage"
+    ],
+    "row": 6,
+    "col": 1
+  },
+  {
+    "id": "docker",
+    "symbol": "Dk",
+    "name": "Docker",
+    "category": "devops",
+    "proficiency": "Advanced",
+    "yearsExperience": 2,
+    "description": "Containerised the NEXUS agent mesh with docker-compose for a reproducible local stack.",
+    "relatedProjectIds": [
+      "nexus"
+    ],
+    "row": 6,
+    "col": 2
+  },
+  {
+    "id": "systemd",
+    "symbol": "Sd",
+    "name": "systemd",
+    "category": "devops",
+    "proficiency": "Advanced",
+    "yearsExperience": 2,
+    "description": "Sixteen service and timer units defining every scheduled job as configuration-as-code, with self-healing maintenance.",
+    "relatedProjectIds": [
+      "everythininai"
+    ],
+    "row": 6,
+    "col": 3
+  },
+  {
+    "id": "pytest",
+    "symbol": "Pt",
+    "name": "pytest",
+    "category": "devops",
+    "proficiency": "Expert",
+    "yearsExperience": 3,
+    "description": "424 cases on the reconciliation platform alone — one named test per fixed defect, including deliberate tamper attempts.",
+    "relatedProjectIds": [
+      "sharda-solutions",
+      "nexus",
+      "kyb-triage"
+    ],
+    "row": 6,
+    "col": 4
+  },
+  {
+    "id": "n8n",
+    "symbol": "N8",
+    "name": "n8n",
+    "category": "devops",
+    "proficiency": "Advanced",
+    "yearsExperience": 1,
+    "description": "A 13-node enrichment and LLM scoring pipeline with idempotent upserts, retry with back-off and graceful degradation.",
+    "relatedProjectIds": [
+      "marque-motors",
+      "everythininai"
+    ],
+    "row": 6,
+    "col": 5
+  },
+  {
+    "id": "control-m",
+    "symbol": "Cm",
+    "name": "Control-M",
+    "category": "devops",
+    "proficiency": "Expert",
+    "yearsExperience": 5,
+    "description": "Built and scheduled 50+ jobs landing client data daily, and root-caused failures across logs and dependency chains.",
+    "relatedProjectIds": [],
+    "row": 6,
+    "col": 6
+  },
+  {
+    "id": "oci",
+    "symbol": "Oc",
+    "name": "Oracle Cloud",
+    "category": "devops",
+    "proficiency": "Advanced",
+    "yearsExperience": 2,
+    "description": "The always-on host for the discovery engine, running unattended around the clock.",
+    "relatedProjectIds": [
+      "everythininai"
+    ],
+    "row": 6,
+    "col": 7
+  },
+  {
+    "id": "pyinstaller",
+    "symbol": "Pi",
+    "name": "PyInstaller",
+    "category": "devops",
+    "proficiency": "Advanced",
+    "yearsExperience": 2,
+    "description": "Signed native builds for macOS and Windows. Code-signing and App Translocation is the 80% that turns a demo into a product.",
+    "relatedProjectIds": [
+      "sharda-solutions",
+      "pe-intelligence"
+    ],
+    "row": 6,
+    "col": 8
+  }
+]

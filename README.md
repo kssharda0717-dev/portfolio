@@ -1,36 +1,170 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Kartik Sharda — Portfolio
 
-## Getting Started
-
-First, run the development server:
+A single-page portfolio for an AI & automation engineer. Next.js 15 App Router,
+React 19, Tailwind v4, TypeScript. Statically rendered, five runtime
+dependencies, no backend.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+| | |
+|---|---|
+| `npm run dev` | Dev server |
+| `npm run build` | Production build |
+| `npm run lint` | ESLint |
+| `npx tsc --noEmit` | Type check |
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+> ⚠️ **Never run `npm run build` while `npm run dev` is running.** They share
+> `.next` and the build will wipe the dev server. Recovery: stop dev,
+> `rm -rf .next`, restart.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Updating content
 
-To learn more about Next.js, take a look at the following resources:
+### The short version: open an issue
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Once the repo is on GitHub, **certifications, projects, skills and your role
+are updated by filling in a form** — Issues → New issue → pick a form. An
+Action edits the JSON, type-checks and builds it, commits, and the site
+redeploys. Nothing to install, nothing to clone.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+See **[docs/CONTENT-PIPELINE.md](docs/CONTENT-PIPELINE.md)**.
 
-## Deploy on Vercel
+### By hand
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Content lives in two places and **never** in `src/`:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| | |
+|---|---|
+| [`content/*.json`](content/) | The things that grow — and what the Action edits |
+| [`portfolio.config.ts`](portfolio.config.ts) | The types, the prose, the settings |
+
+Everything is typed — a malformed entry fails the type check instead of
+breaking the page.
+
+After any edit: `npx tsc --noEmit && npm run lint`, then look at it in the browser.
+
+### Add a certification — 1 line
+
+In `content/certifications.json`. Keep newest first.
+
+```json
+{ "title": "Fusion HCM Implementation Professional", "issuer": "Oracle", "issueYear": "2027" },
+```
+
+### Change your role or title
+
+All five strings are in `content/role.json`:
+
+```json
+{
+  "roleTitle":      "AI Solutions Engineer",            // hero H1, JSON-LD jobTitle
+  "heroSubline":    "Enterprise payroll · agentic AI",  // line under the H1
+  "headline":       "Oracle Fusion HCM Consultant · …", // long-form positioning
+  "seoTitle":       "Kartik Sharda — …",                // tab + share preview
+  "seoDescription": "…"
+}
+```
+
+Add the job itself to `content/experience.json`, newest first.
+
+### Add a project
+
+In `content/projects.json`. Give it **either** `githubUrl` **or**
+`availabilityNote` — the note renders in place of the link for work that can't
+be published.
+
+```json
+{
+  "id": "new-thing",
+  "eyebrow": "Agentic AI · RAG",
+  "title": "New Thing — What It Does",
+  "shortDescription": "One or two sentences on the problem it solves.",
+  "featureHighlights": ["…", "…", "…"],
+  "techStackTags": ["Python", "FastAPI", "Postgres"],
+  "githubUrl": "https://github.com/…"
+}
+```
+
+`id` is permanent — `relatedProjectIds` in the stack points at it. The desktop
+accordion is `h-[38rem]`; a body longer than ~606px scrolls inside its panel.
+
+### Update an experience entry
+
+In `content/experience.json`. The bullets are what unfold as the timeline
+scrolls — keep them to 3–5 so the card stays readable.
+
+### Add a skill to the periodic table
+
+In `content/techStack.json`. **This is the one entry with friction by hand** —
+you must pick a free `row` / `col` in the 10-column grid yourself (the gaps are
+deliberate). The issue form does this for you.
+
+```json
+{
+  "id": "langgraph", "symbol": "Lg", "name": "LangGraph",
+  "category": "ai",
+  "proficiency": "Advanced", "yearsExperience": 1,
+  "description": "What you actually used it for.",
+  "relatedProjectIds": ["nexus"],
+  "row": 5, "col": 10
+}
+```
+
+For its brand logo, add an import to `MARKS` in
+[`src/components/BrandMark.tsx`](src/components/BrandMark.tsx). If there isn't
+one it falls back to the monogram — which is the periodic-table conceit anyway.
+
+### Other common edits
+
+| Want to change | Where |
+|---|---|
+| Bio paragraph | `personalInfo.bioParagraph` |
+| "Outer Facts" table | `personalInfo.outerFacts[]` |
+| ID card front (checklist) | `personalInfo.whatIAm[]` |
+| ID card back (badge) | `personalInfo.idCard` |
+| Pull quote | `personalInfo.pullQuote` |
+| Metrics | `content/achievements.json` |
+| Closing line + CTA | `contact` |
+| Résumé PDF | Replace `public/Kartik_Sharda_Resume.pdf` |
+| Hero loop / voiceover | Replace the files in `public/avatar/`, then update `personalInfo.avatar.voiceTranscript` |
+
+---
+
+## Documentation
+
+| Doc | What's in it |
+|---|---|
+| [docs/MEMORY.md](docs/MEMORY.md) | **Start here.** Project context, current state, hard-won gotchas |
+| [docs/PRD.md](docs/PRD.md) | Why the site exists, audience, scope, success criteria |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Stack, directory layout, data flow, server/client boundary |
+| [docs/DESIGN.md](docs/DESIGN.md) | Colour tokens, typography, motion, accessibility baseline |
+| [docs/RULES.md](docs/RULES.md) | Binding engineering conventions + preview-browser traps |
+| [docs/DECISIONS.md](docs/DECISIONS.md) | Decision log — what was chosen, and what was rejected |
+| [docs/TASKS.md](docs/TASKS.md) | Open work, prioritised |
+| [docs/SECURITY.md](docs/SECURITY.md) | Threat model, dependency posture, recommended headers |
+| [docs/CONTENT-PIPELINE.md](docs/CONTENT-PIPELINE.md) | Updating the site without opening an editor |
+
+## Structure
+
+```
+content/*.json          ← the content that grows (7 files)
+portfolio.config.ts     ← types, prose, settings; imports the above
+.github/                issue forms + the content-update workflow
+scripts/                apply-content-issue.mjs
+src/app/
+  layout.tsx            fonts · SEO metadata · JSON-LD · skip link
+  page.tsx              section composition
+  globals.css           design tokens + typographic primitives
+src/components/         15 components — no personal data
+public/avatar/          hero loop, voiceover, poster, photo
+```
+
+## Credits
+
+Visual design is a re-interpretation of **Lohitha Damisetti's** portfolio —
+layout, motion language and section structure. All content, the stack and the
+colour system are Kartik's own. See [docs/PRD.md](docs/PRD.md) §8.

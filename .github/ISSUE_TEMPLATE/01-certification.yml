@@ -1,0 +1,36 @@
+name: Add a certification
+description: A new certificate to list in the Experience section.
+title: 'content: add certification'
+labels: ['content', 'content:certification']
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Submit this and the site updates itself. The entry is added to the top
+        of the list, so newest appears first.
+
+  - type: input
+    id: title
+    attributes:
+      label: Certification title
+      description: Exactly as it is printed on the certificate, without the issuer name.
+      placeholder: Fusion HCM Implementation Professional
+    validations:
+      required: true
+
+  - type: input
+    id: issuer
+    attributes:
+      label: Issuer
+      placeholder: Oracle
+    validations:
+      required: true
+
+  - type: input
+    id: issueYear
+    attributes:
+      label: Year issued
+      description: Four digits.
+      placeholder: '2027'
+    validations:
+      required: true

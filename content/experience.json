@@ -1,0 +1,55 @@
+[
+  {
+    "role": "Independent — AI Product Builder",
+    "organisation": "Self-directed",
+    "period": "Jun 2026 — Present",
+    "highlights": [
+      "Designing and shipping AI and automation systems end to end: architecture, implementation, testing, packaging and deployment.",
+      "Earned Oracle Fusion Cloud Applications HCM Process Essentials and Fusion AI Agent Studio Foundations Associate certifications.",
+      "Mapping proven PeopleSoft objects to Fusion equivalents — Pay Calendars to Payroll Definitions, PeopleCode to Fast Formula, Records to Flexfields."
+    ]
+  },
+  {
+    "role": "Application Operations & Integration Consultant",
+    "organisation": "Hexaware Technologies",
+    "client": "GE Aerospace (GPIT)",
+    "period": "Apr 2024 — Jun 2026",
+    "highlights": [
+      "Owned the PGP encryption and decryption key lifecycle across all vendor transmissions, holding zero transmission failures across the engagement.",
+      "Configured SFTP and FTP integration channels per vendor, and built alert-driven event pipelines that removed manual handling of routine transfers.",
+      "Root-caused SmartSched and Control-M job failures across logs, dependency chains and upstream impact, restoring scheduled operations with minimal disruption.",
+      "Produced daily shift-handover runsheets and assembled audit-evidence packages for internal and external audits."
+    ]
+  },
+  {
+    "role": "PeopleSoft HCM Consultant, North America Payroll",
+    "organisation": "Hexaware Technologies",
+    "client": "CVS Health (Fortune 500), via an Alight engagement",
+    "period": "Mar 2021 — Mar 2024",
+    "location": "Chennai",
+    "highlights": [
+      "First point of contact on payroll-run days, triaging pay-calculation failures, paysheet errors and confirm-pay issues so scheduled pay dates ran on time across multiple US pay groups.",
+      "Built an end-to-end SQR that read Job Data, derived pay-group-specific tax policy and posted tax calculations to payroll tables — improving accuracy by roughly 20%.",
+      "Developed and scheduled 50+ Control-M jobs collecting client data and landing it on client servers daily.",
+      "Supported a PeopleSoft-to-Workday migration assessment and remediated access on custom permission lists during a security assessment.",
+      "Delivered six weeks of go-live support and led weekly stakeholder reviews, sustaining CSAT above 9.5/10 for nine consecutive months."
+    ]
+  },
+  {
+    "role": "Software Engineer Trainee",
+    "organisation": "Hexaware Technologies",
+    "period": "Sep 2020 — Feb 2021",
+    "location": "Chennai",
+    "highlights": [
+      "Enterprise application development foundations before moving onto the CVS Health payroll engagement."
+    ]
+  },
+  {
+    "role": "Intern",
+    "organisation": "Bharat Electronics Limited",
+    "period": "Jun 2019 — Jul 2019",
+    "highlights": [
+      "Assisted antenna testing for systems destined for Indian defence installations, and studied their assembly."
+    ]
+  }
+]

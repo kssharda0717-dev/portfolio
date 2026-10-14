@@ -1,0 +1,6 @@
+# A blank issue is still allowed — it just will not trigger the content
+# workflow, which keys off the labels the forms below apply.
+#
+# `contact_links` needs absolute URLs, so there is no entry here until the repo
+# has a real remote. The how-it-works doc is docs/CONTENT-PIPELINE.md.
+blank_issues_enabled: true
