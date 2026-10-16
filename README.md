@@ -1,8 +1,13 @@
 # Kartik Sharda — Portfolio
 
+**Live: <https://www.kartiksharda.in>**
+
 A single-page portfolio for an AI & automation engineer. Next.js 15 App Router,
 React 19, Tailwind v4, TypeScript. Statically rendered, five runtime
-dependencies, no backend.
+dependencies, no backend. Deployed on Vercel from `main`.
+
+> ⚠️ **A push to `main` is a release.** No staging branch, no review gate —
+> `main` builds straight to production.
 
 ```bash
 npm install
@@ -35,8 +40,13 @@ Changing one thing about something that already exists is a **two-box issue**:
 the id, and the field you are changing. The project and skill forms merge —
 anything left blank keeps what it had.
 
-See **[docs/CONTENT-PIPELINE.md](docs/CONTENT-PIPELINE.md)**, including the two
-repo settings the pipeline needs before any of it fires.
+The pipeline is **live and already proven** — issue #1 added a repo link to a
+project and the Action shipped it as commit `fbb46fb`. See
+**[docs/CONTENT-PIPELINE.md](docs/CONTENT-PIPELINE.md)**.
+
+> ⚠️ **`git pull` before editing anything by hand.** A form commits to `main`
+> from GitHub, so this clone goes stale with nothing happening locally. Editing
+> `content/*.json` from a stale clone reverts the bot's last change.
 
 ### By hand
 

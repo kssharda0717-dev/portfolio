@@ -306,7 +306,10 @@ export const portfolioConfig: PortfolioConfig = {
   },
 
   seo: {
-    siteUrl: 'https://kartiksharda.in',
+    // Must match the host's primary domain exactly. Vercel serves `www` as
+    // primary and 308s the apex to it, so the apex form here would make every
+    // og:url, og:image and the JSON-LD url a redirect. See DECISIONS D-022.
+    siteUrl: 'https://www.kartiksharda.in',
     // Kept beside the role strings so a title change updates the share preview
     // in the same edit, instead of leaving the two to drift apart.
     title: roleJson.seoTitle,

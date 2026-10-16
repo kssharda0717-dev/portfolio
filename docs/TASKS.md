@@ -1,51 +1,60 @@
 # Tasks
 
-**Last updated:** 2026-10-14
+**Last updated:** 2026-10-16
 
 Open work, ordered by priority. Done work is at the bottom for context — delete
 it once the list gets long.
 
-**Priority:** 🔴 blocks launch · 🟡 should fix · 🟢 nice to have
+**The site is live at <https://www.kartiksharda.in>** (Vercel, deployed from
+`main`). Nothing on this list blocks launch any more — launch happened. Read
+the priorities as *risk to a site that is already public*, which is why T-11
+sits at the top: `main` auto-deploys, so an unreviewed commit is in production
+within minutes.
+
+**Priority:** 🔴 live-site risk · 🟡 should fix · 🟢 nice to have
 
 ---
 
 ## Open
 
-### 🔴 T-0 — Two GitHub settings the pipeline needs
+### 🔴 T-11 — Protect `main`, with an exception for the Actions bot
 
-The repo is pushed to `kssharda0717-dev/portfolio`, so the forms and the
-workflow are live. Two things still have to be clicked, because neither can be
-committed:
+The content workflow pushes to `main` unattended (proven by `fbb46fb`), **and
+`main` auto-deploys to the live site**, so an unreviewed commit reaches
+production in minutes. The branch has no protection.
 
-1. **Issues → Labels** — create `content`, `content:certification`,
-   `content:project`, `content:skill`, `content:role`. An issue form that names
-   a label the repo does not have has it **silently dropped**: the issue opens
-   looking correct and the workflow never fires.
-2. **Settings → Actions → General → Workflow permissions → Read and write.**
-   The workflow commits to `main`; the default read-only token fails at the push.
+Enable **Settings → Branches → branch protection for `main`**, then confirm the
+workflow can still push — a rule that blocks `github-actions[bot]` silently
+breaks the whole pipeline, and the failure shows up as an issue that never
+closes rather than as an obvious error.
 
-Until both are done every form submission is a no-op.
-See [CONTENT-PIPELINE](CONTENT-PIPELINE.md) §0.
+Suggested: require linear history, block force-push and deletion, and *do not*
+require a PR for the bot. [SECURITY](SECURITY.md) §8.
 
 ---
 
-### ✅ T-3 — `seo.siteUrl` now points at the real domain
+### 🔴 T-15 — Check what the public résumé PDF actually contains
 
-`kartiksharda.in` was registered on 14 Oct 2026 (Wix, renews Oct 2029) and
-`seo.siteUrl` reads `https://kartiksharda.in`. It feeds `metadataBase`,
-OpenGraph `url`, Twitter cards **and the JSON-LD `url` / `image`**, so it has to
-match the address the site is actually served from — re-check it if the domain
-ever moves.
+`Kartik_Sharda_Resume.pdf` is live, unauthenticated and indexable at
+<https://www.kartiksharda.in/Kartik_Sharda_Resume.pdf>. The check for a home
+address, phone number or signature image was written as a *pre-deploy* step and
+the deploy happened first, so it was never done.
 
-*Remaining: confirm share previews resolve once DNS is pointed at the host.*
+Open the file, confirm it is the version intended for a public URL rather than
+one sent to a named recruiter, and replace it if not. A replacement is a file
+swap and a push. [SECURITY](SECURITY.md) §5.
 
 ---
 
-### 🟡 T-4 — Deploy
+### 🟡 T-12 — `git pull` before any hand edit
 
-Vercel is the path of least resistance for a static Next app. Needs: domain,
-`siteUrl` fixed (T-3), and a check that `public/Kartik_Sharda_Resume.pdf` is
-the version he wants public.
+A form submission commits straight to `main` from GitHub, so a local clone goes
+stale without anything happening on this machine. Hand-editing `content/*.json`
+from a stale clone and committing **reverts whatever the bot last wrote**.
+
+Not a code fix — a habit, now recorded in the maintenance cadence below. Worth
+revisiting only if it actually bites: a `prepare-commit-msg` hook that refuses
+to commit `content/` while behind `origin/main` would close it properly.
 
 ---
 
@@ -66,6 +75,28 @@ literal type.*
 The last mobile pass predates the `HeroAvatar` rewrite (single button, no
 caption, scroll-driven playback). Confirm the figure sits above the headline,
 the sound button is reachable, and nothing overlaps the new mobile pill row.
+
+---
+
+### 🟢 T-13 — Confirm the share preview actually renders
+
+`siteUrl` now matches the serving host (D-022), so `og:image` is fetched
+directly rather than through a redirect. **Unverified in the wild.** Run the
+link through LinkedIn's Post Inspector and X's Card Validator once; both cache
+aggressively, so the inspector is also how you force a re-scrape after any
+future change to the title, description or photo.
+
+---
+
+### 🟢 T-14 — Response headers are not set
+
+Measured on the live site: **only `Strict-Transport-Security` is present**, and
+that is Vercel's default, not ours. No CSP, no `X-Content-Type-Options`, no
+`Referrer-Policy`, no `Permissions-Policy`, no `X-Frame-Options`.
+[SECURITY](SECURITY.md) §7 has the recommended set ready to paste.
+
+Add a `headers()` block in `next.config.ts` — note that `next.config.ts` being
+deliberately empty is itself documented, so this would be the first thing in it.
 
 ---
 
@@ -112,6 +143,11 @@ The first five of these are **issue forms, not edits** — see
 [CONTENT-PIPELINE](CONTENT-PIPELINE.md). The two *update* rows only need the id
 and the one field being changed; everything left blank is kept.
 
+> **Before any hand edit: `git pull`.** The forms commit to `main` from GitHub,
+> so this clone goes stale without anything happening locally. Editing
+> `content/*.json` from a stale clone silently reverts the bot's last change
+> (T-12).
+
 | When | Do | Or by hand |
 |---|---|---|
 | New certification | *Add a certification* form | `content/certifications.json` |
@@ -151,3 +187,16 @@ Recipes with copy-paste snippets are in the [README](../README.md).
 - ✅ Content split into `content/*.json` — [DECISIONS](DECISIONS.md) D-017
 - ✅ No-code update pipeline: 4 issue forms + Action —
   [CONTENT-PIPELINE](CONTENT-PIPELINE.md), [DECISIONS](DECISIONS.md) D-018
+- ✅ **T-0** The two GitHub dashboard settings — labels and *Read and write*
+  workflow permissions — are both in place. Confirmed not by inspection but by
+  the pipeline completing a real run end to end: issue #1 → label →
+  workflow → `content/projects.json` edited → `tsc`/`eslint`/`next build`
+  → commit `fbb46fb` → issue closed. A missing label or a read-only token
+  would each have stopped that silently.
+- ✅ Repo pushed to `kssharda0717-dev/portfolio`; the forms are live
+- ✅ **T-3** `seo.siteUrl` points at the real domain. `kartiksharda.in` was
+  registered 14 Oct 2026 (Wix, renews Oct 2029). Corrected to the **`www`**
+  form on 16 Oct once the host's primary domain was known —
+  [DECISIONS](DECISIONS.md) D-022
+- ✅ **T-4** Deployed. Vercel, serving `https://www.kartiksharda.in` from
+  `main`, apex `308`s to `www`. Pushing to `main` ships to production

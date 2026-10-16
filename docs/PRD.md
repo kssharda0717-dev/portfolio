@@ -1,6 +1,6 @@
 # PRD — Kartik Sharda Portfolio
 
-**Status:** shipped, pre-deploy · **Last updated:** 2026-10-07 · **Owner:** Kartik Sharda
+**Status:** live at <https://www.kartiksharda.in> · **Last updated:** 2026-10-16 · **Owner:** Kartik Sharda
 
 ---
 
@@ -113,9 +113,9 @@ Plus a floating **pill nav** with scroll-spy (6 items).
 | S-5 | Content survives JS being disabled | ✅ |
 | S-6 | Adding a certification = 1 line, no component edit | ✅ — now a form, no edit at all ([CONTENT-PIPELINE](CONTENT-PIPELINE.md)) |
 | S-7 | No horizontal overflow at 375px | ✅ max `scrollWidth` 375 sampled across the whole page |
-| S-8 | Deployed on a real domain with correct `siteUrl` | ⚠️ open — [TASKS](TASKS.md) T-3 |
+| S-8 | Deployed on a real domain with correct `siteUrl` | ✅ live on Vercel at `https://www.kartiksharda.in`; `siteUrl` matches the serving host ([DECISIONS](DECISIONS.md) D-022). Share preview itself not yet validated — [TASKS](TASKS.md) T-13 |
 | S-9 | Navigation reachable on a phone, tap targets ≥44px | ✅ scrolling pill row, 44px, active pill auto-centred |
-| S-10 | Content updatable without opening an editor | ✅ built, inert until the repo is pushed ([TASKS](TASKS.md) T-0) |
+| S-10 | Content updatable without opening an editor | ✅ met — proven end to end: issue #1 → Action → commit `fbb46fb` → issue closed, no editor opened |
 
 ## 8. Provenance
 

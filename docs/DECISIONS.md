@@ -392,3 +392,38 @@ overwrote the first run's verdict and reclosed the issue as *not planned*. The
 merge makes re-application a no-op, so the second run now produces no diff and
 reports nothing unless the issue is still open. Editing a **closed** issue no
 longer replays it at all.
+
+---
+
+## D-022 — `seo.siteUrl` carries the `www` host, matching Vercel ✅
+
+**Date.** 2026-10-16
+
+**Context.** The site deployed to Vercel on `kartiksharda.in`, which Vercel
+serves with **`www` as the primary domain**: the apex answers `308` and
+redirects to `https://www.kartiksharda.in`. `seo.siteUrl` still held the apex
+form, and it is the single string `layout.tsx` derives `metadataBase`,
+`og:url`, `og:image`, `twitter:image` and the JSON-LD `url` / `image` from.
+Every one of those therefore advertised an address that redirects — verified
+against the live HTML, not inferred.
+
+**Decision.** Set `siteUrl` to `https://www.kartiksharda.in` — match the config
+to the host rather than the host to the config.
+
+**Why not flip Vercel to the apex instead.** Equally correct, and it would have
+left the shorter address canonical. Rejected because it changes the thing that
+is already working in production to suit a string, instead of changing the
+string to describe production. The apex still resolves either way, so nothing a
+human types or prints on a résumé is affected; the canonical host is a signal to
+crawlers and link scrapers, not to people.
+
+**Consequences.**
+
+- Share previews fetch the image directly instead of through a redirect.
+  Most scrapers follow a `308`, but LinkedIn has historically been unreliable
+  with redirected `og:image`, which is the concrete failure this removes.
+- One canonical host, so search engines stop splitting signals across two.
+- **This is now a coupled pair.** If the primary domain is ever changed in the
+  Vercel dashboard, `siteUrl` must change in the same breath — nothing in the
+  build can detect the mismatch, because the redirect means the site still
+  works. The symptom is only ever a degraded share preview.

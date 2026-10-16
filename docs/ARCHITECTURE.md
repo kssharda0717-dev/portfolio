@@ -1,6 +1,6 @@
 # Architecture
 
-**Last updated:** 2026-10-07
+**Last updated:** 2026-10-16
 
 ---
 
@@ -214,8 +214,28 @@ npx tsc --noEmit
 > (`ENOENT .next/prerender-manifest.json`). Recovery: stop dev, `rm -rf .next`,
 > restart.
 
-Deployment target is undecided — Vercel is the path of least resistance.
-`seo.siteUrl` must be set to the real domain first ([TASKS](TASKS.md) T-3).
+**Deployed on Vercel at <https://www.kartiksharda.in>, built from `main`.**
+The apex `kartiksharda.in` answers `308` and redirects to the `www` host, which
+is Vercel's primary domain for the project.
+
+`seo.siteUrl` must therefore read **`https://www.kartiksharda.in`** — the `www`
+form. It is the one string `layout.tsx` derives `metadataBase`, `og:url`,
+`og:image`, `twitter:image` and the JSON-LD `url` / `image` from, so the apex
+form would make every share-preview URL a redirect
+([DECISIONS](DECISIONS.md) D-022). Nothing in the build can catch a mismatch —
+the redirect means the site still works — so **if the primary domain ever
+changes in the Vercel dashboard, change `siteUrl` in the same breath.**
+
+Two consequences of deploying from `main`:
+
+- **A push to `main` is a release.** There is no staging branch and no review
+  gate; the content Action pushes to `main` on its own, so a form submission
+  reaches production unattended ([TASKS](TASKS.md) T-11).
+- **`main` is not always what this clone holds.** Pull before editing
+  ([TASKS](TASKS.md) T-12).
+
+Response headers are not configured yet — [SECURITY](SECURITY.md) §7,
+[TASKS](TASKS.md) T-14.
 
 ## 8. Performance notes
 

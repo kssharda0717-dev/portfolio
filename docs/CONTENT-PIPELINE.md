@@ -6,10 +6,12 @@ You fill in a form on GitHub. A workflow edits the content files, type-checks
 and builds the result, commits it, and the host redeploys. Nothing to install,
 no branch to pull, no code to read.
 
-## 0. One-time setup on GitHub
+## 0. One-time setup on GitHub — ✅ already done
 
-Two things have to exist before a form does anything. Both are dashboard
-settings, not code, so they cannot be committed:
+**Both settings are in place on `kssharda0717-dev/portfolio` and the pipeline
+has completed a real run** (issue #1 → commit `fbb46fb`). Nothing to do. This
+section is kept because neither setting is code, so neither is restored by
+cloning — recreate both if the repo is ever forked, migrated or rebuilt:
 
 1. **The labels.** Create `content`, `content:certification`, `content:project`,
    `content:skill` and `content:role` under **Issues → Labels**. A form that
@@ -18,6 +20,9 @@ settings, not code, so they cannot be committed:
 2. **Write permission for Actions.** **Settings → Actions → General → Workflow
    permissions → Read and write**. The workflow commits to `main`; without this
    it reaches the push and fails.
+
+Both failure modes are silent, which is why a successful run is the only real
+proof either is set.
 
 ---
 

@@ -1,6 +1,6 @@
 # Security
 
-**Last updated:** 2026-10-07 · **Classification:** public marketing site
+**Last updated:** 2026-10-16 · **Classification:** public marketing site
 
 ---
 
@@ -19,7 +19,7 @@ not because the risk is high.
 |---|---|---|---|
 | Site content | Defacement via hosting account | Low | Strong auth + 2FA on the host and the Git remote |
 | Kartik's email | Scraping → spam | **Accepted** | Published deliberately; it is a contact channel |
-| Résumé PDF | Public download | **Accepted** | Intentionally public; check it carries no address/phone before deploy |
+| Résumé PDF | Public download | **Accepted — and now live** | Intentionally public. Served at `/Kartik_Sharda_Resume.pdf`, `200`, no auth. The "check it first" window has closed; see §5 |
 | Visitors | XSS | Very low | See §3 |
 | Visitors | Malicious third-party script | **None** | Zero third-party runtime scripts |
 | Supply chain | Compromised npm package | Low–moderate | 5 runtime deps, lockfile committed, see §4 |
@@ -104,9 +104,14 @@ Personal data published **deliberately** by the owner: name, professional
 history, city (Noida, India), email (`kssharda0717@gmail.com`), GitHub,
 LinkedIn, a photograph, a voice recording and a résumé PDF.
 
-> **Pre-deploy check:** confirm `public/Kartik_Sharda_Resume.pdf` does not
-> contain a home address, phone number or signature image. A résumé sent to a
-> named recruiter and a résumé on a public URL are different documents.
+> **This check is now overdue, not pending.** `Kartik_Sharda_Resume.pdf` is
+> already being served publicly at
+> <https://www.kartiksharda.in/Kartik_Sharda_Resume.pdf> — `200`, no auth,
+> indexable. Confirm it carries no home address, phone number or signature
+> image. A résumé sent to a named recruiter and a résumé on a public URL are
+> different documents, and this one is the public kind as of the deploy.
+> Replacing the file and pushing is enough to fix it.
+> Tracked as [TASKS](TASKS.md) T-15.
 
 ## 6. The content pipeline — the one real attack surface
 
@@ -154,8 +159,10 @@ visible in `git log` without opening anything.
 
 ## 7. Recommended response headers
 
-Set at the host (Vercel `headers()` or equivalent). Not yet configured —
-fold into [TASKS](TASKS.md) T-4.
+Set at the host (Vercel `headers()` or equivalent). **Measured against the live
+site: only `Strict-Transport-Security` is present**, and that is Vercel's
+default rather than anything this repo configured. Every other header below is
+absent — [TASKS](TASKS.md) T-14.
 
 ```
 Content-Security-Policy: default-src 'self'; img-src 'self' data:;
@@ -180,7 +187,11 @@ conflicts with static export (D-003) — not worth it for a site with no secrets
 - **No secrets in the repo.** There are none today and there is no reason for
   one to appear — the site has no API to authenticate against. Never commit a
   `.env`.
-- **Protect `main`** once the remote exists; deploy from it.
+- **Protect `main`.** The remote now exists and the content Action pushes to
+  `main` unattended (first real run: `fbb46fb`), so this is live work, not a
+  future note — [TASKS](TASKS.md) T-11. Any rule must leave
+  `github-actions[bot]` able to push: a rule that blocks it breaks the pipeline
+  *silently*, surfacing only as an issue that never closes. Deploy from `main`.
 
 ## 9. Reporting
 

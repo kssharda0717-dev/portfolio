@@ -1,6 +1,6 @@
 # Project memory
 
-**Last updated:** 2026-10-07
+**Last updated:** 2026-10-16
 
 Durable context for whoever picks this up next — future Kartik or an AI agent.
 Read this first, then [RULES](RULES.md).
@@ -38,9 +38,14 @@ and untyped `relatedProjectIds` ([TASKS](TASKS.md) T-5, T-8).
 
 ## 3. Current state
 
-Feature-complete and verified; **not deployed, and almost entirely
-uncommitted** (see [TASKS](TASKS.md) T-0 — `git log` has one
-create-next-app commit).
+Feature-complete, verified, and **live at <https://www.kartiksharda.in>** —
+Vercel, built from `main` on `kssharda0717-dev/portfolio`. The apex redirects
+to the `www` host, which is why `seo.siteUrl` carries the `www` form
+([DECISIONS](DECISIONS.md) D-022).
+
+> **A push to `main` is a release.** No staging branch, no review gate, and the
+> content Action pushes to `main` by itself — so a form submission goes to
+> production unattended. `main` is still unprotected ([TASKS](TASKS.md) T-11).
 
 `tsc --noEmit` clean · `eslint` clean · no console errors · 5 dev-only
 `npm audit` findings, accepted.
@@ -50,8 +55,14 @@ create-next-app commit).
 
 **Updates without code:** four GitHub issue forms + an Action that edits
 `content/*.json`, gates on `tsc`/`eslint`/`next build`, commits and closes the
-issue. Written and dry-run; inert until the repo is pushed. See
+issue. **Live, and proven by a real run** — issue #1 added a repo link to the
+job-crm project and the Action committed it as `fbb46fb`. See
 [CONTENT-PIPELINE](CONTENT-PIPELINE.md).
+
+> **Consequence: this clone goes stale on its own.** The Action commits to
+> `main` from GitHub with nothing happening on this machine. **`git pull` before
+> touching `content/*.json`** — editing from a stale clone reverts the bot's
+> last change ([TASKS](TASKS.md) T-12).
 
 Both mobile blockers are closed: no horizontal overflow at 375px, and the pill
 nav now scrolls on a phone.
